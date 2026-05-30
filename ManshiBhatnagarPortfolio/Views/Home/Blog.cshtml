@@ -1,0 +1,221 @@
+﻿@model BlogPageViewModel
+@{
+    ViewData["Title"] = "Blog";
+}
+<link href="~/css/BlogPage.css" rel="stylesheet" />
+
+<!-- Hero Section -->
+<section class="hero-blog">
+    <div class="hero-blog-content">
+        <h1 class="hero-blog-title">Tech & Innovation Blog</h1>
+        <p class="hero-blog-subtitle">Insights on Artificial Intelligence, Smart Grids, and Cybersecurity.</p>
+    </div>
+    <div class="custom-shape-divider-bottom">
+        <svg data-name="Layer 1" xmlns="http://w3.org" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="#f8f9fa"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Blog Page Layout -->
+<section class="blog-page-bg">
+    <div class="blog-container">
+
+        <!-- LEFT COLUMN: Main Blog Feed -->
+        @* <div class="blog-feed">
+
+            <!-- Blog Post 1 -->
+            <article class="blog-post-card">
+                <div class="blog-img-wrapper">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Deep Learning in Power Systems">
+                </div>
+                <div class="blog-post-content">
+                    <span class="blog-tag">DEEP LEARNING</span>
+                    <a href="/Home/BlogDetail" class="blog-post-title">How Meta-Heuristic Algorithms are Stabilizing the Grid</a>
+                    <p class="blog-post-excerpt">
+                        As cities transition to renewable energy sources, predictive algorithms are necessary to manage energy loads. Learn how temporal convolutional networks make it possible to predict the required power load and optimize performance...
+                    </p>
+                    <div class="blog-meta">
+                        <span>By Mansi Bhatnagar • March 12, 2026</span>
+                        <a href="/Home/BlogDetail" class="blog-read-more">Read Full Post <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 2 -->
+            <article class="blog-post-card">
+                <div class="blog-img-wrapper">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="IoT Security Architecture">
+                </div>
+                <div class="blog-post-content">
+                    <span class="blog-tag">CYBER SECURITY</span>
+                    <a href="/Home/BlogDetail" class="blog-post-title">Protecting IoT Infrastructure from Distributed Attacks</a>
+                    <p class="blog-post-excerpt">
+                        The sheer volume of connected devices opens new potential threat vectors on municipal utilities. Let's dive deep into structural architectures designed specifically to identify, isolate, and mitigate DDOS attacks on remote sensor grids...
+                    </p>
+                    <div class="blog-meta">
+                        <span>By Mansi Bhatnagar • Feb 24, 2026</span>
+                        <a href="/Home/BlogDetail" class="blog-read-more">Read Full Post <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </div>
+            </article>
+
+            <!-- Blog Post 3 -->
+            <article class="blog-post-card">
+                <div class="blog-img-wrapper">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Academic Mentorship">
+                </div>
+                <div class="blog-post-content">
+                    <span class="blog-tag">ACADEMIA</span>
+                    <a href="/Home/BlogDetail" class="blog-post-title">Finding Your Research Niche in AI</a>
+                    <p class="blog-post-excerpt">
+                        Early Career Researchers often struggle to narrow down their focus within the massive field of Artificial Intelligence. Here I outline my approach for identifying a niche that isn't just trending, but practically valuable...
+                    </p>
+                    <div class="blog-meta">
+                        <span>By Mansi Bhatnagar • Jan 06, 2026</span>
+                        <a href="/Home/BlogDetail" class="blog-read-more">Read Full Post <span aria-hidden="true">&rarr;</span></a>
+                    </div>
+                </div>
+            </article>
+
+        </div> *@
+        <div class="blog-feed">
+
+            @foreach (var item in Model.Articles)
+            {
+                <article class="blog-post-card">
+                    <div class="blog-img-wrapper">
+                        <img src="@item.ImageUrl" alt="@item.Title">
+                    </div>
+
+                    <div class="blog-post-content">
+                        <span class="blog-tag">@item.Category?.ToUpper()</span>
+
+                        <a href="/Home/BlogDetail/@item.Id" class="blog-post-title">
+                            @item.Title
+                        </a>
+
+                        <p class="blog-post-excerpt">
+                            @(item.Content != null && item.Content.Length > 150
+                                                    ? item.Content.Substring(0, 150) + "..."
+                                                    : item.Content)
+                    </p>
+
+                        <div class="blog-meta">
+                            <span>
+                                By @item.Author • @item.CreatedDate.ToString("MMM dd, yyyy")
+                            </span>
+
+                            <a href="/Home/BlogDetail/@item.Id" class="blog-read-more">
+                                Read Full Post →
+                            </a>
+                        </div>
+                    </div>
+                </article>
+                        }
+
+        </div>
+        <!-- RIGHT COLUMN: Sidebar -->
+        <aside class="blog-sidebar">
+
+            <!-- Latest Blogs Widget -->
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Latest Blogs</h3>
+                @* <ul class="latest-blogs-list">
+                    
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">How Meta-Heuristic Algorithms are Grid</a></h4>
+                            <span>Mar 12, 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">Protecting IoT Infrastructure</a></h4>
+                            <span>Feb 24, 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">Finding Your Research Niche in AI</a></h4>
+                            <span>Jan 06, 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">Computer Vision in Infrastructure</a></h4>
+                            <span>Dec 15, 2025</span>
+                        </div>
+                    </li>
+
+                </ul> *@
+                <ul class="latest-blogs-list">
+
+                    @foreach (var item in Model.Articles.Take(4))
+                    {
+                        <li class="latest-blog-item">
+                            <img src="@item.ImageUrl" class="latest-blog-img" alt="Blog Thumb">
+
+                            <div class="latest-blog-info">
+                                <h4>
+                                    <a href="/Home/BlogDetail/@item.Id">
+                                        @item.Title
+                                    </a>
+                                </h4>
+
+                                <span>@item.CreatedDate.ToString("MMM dd, yyyy")</span>
+                            </div>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+
+            <!-- Categories Widget -->
+            @* <div class="sidebar-widget">
+                    <h3 class="widget-title">Categories</h3>
+                    <ul class="list-unstyled" style="line-height:2.2;">
+                        <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Deep Learning (12)</a></li>
+                        <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Cyber Security (8)</a></li>
+                        <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Smart Grids (5)</a></li>
+                        <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Academia & Mentorship (14)</a></li>
+                    </ul>
+                </div> *@
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Categories</h3>
+
+                <ul class="list-unstyled" style="line-height:2.2;">
+
+                    <li>
+                        <a href="/Home/Blog"
+                           style="color:@(Model.SelectedCategory == null ? "#000" : "#555"); font-weight:bold; text-decoration:none;">
+                            → All (@Model.Articles.Count)
+                        </a>
+                    </li>
+
+                    @foreach (var cat in Model.Categories)
+                    {
+                        <li>
+                            <a href="/Home/Blog?category=@cat.Name"
+                               style="color:@(Model.SelectedCategory == cat.Name ? "#000" : "#555");
+                                  font-weight:@(Model.SelectedCategory == cat.Name ? "bold" : "normal");
+                                  text-decoration:none;">
+
+                                → @cat.Name (@cat.Count)
+                            </a>
+                        </li>
+                    }
+
+                </ul>
+            </div>
+        </aside>
+
+    </div>
+</section>

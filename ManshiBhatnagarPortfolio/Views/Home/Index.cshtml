@@ -1,0 +1,188 @@
+﻿@model List<Article>
+@{
+    ViewData["Title"] = "Home Page";
+}
+<!-- Make sure to link HomePage.css -->
+<link href="~/css/HomePage.css" rel="stylesheet" />
+
+<!-- Premium Hero Section -->
+<section class="hero-section">
+    <div class="container">
+        <div class="row align-items-center">
+
+            <div class="col-lg-6 hero-content">
+                <span class="text-uppercase mb-3 d-block" style="color: var(--blush-pink); font-weight: 700; letter-spacing: 2px;">Welcome into my world</span>
+                <h1 class="display-3">Mansi Bhatnagar</h1>
+                <p class="lead mb-4">Ph.D. Scholar & AI Researcher</p>
+                <a href="/Home/Research" class="btn cta-button px-5 py-3">Explore My Research</a>
+            </div>
+
+            <div class="col-lg-6 mt-5 mt-lg-0 hero-image-pane text-center">
+                <img src="~/staticimage/hero_section_img.jpg" class="organic-image" alt="Mansi Bhatnagar" style="width: 80%; max-width: 500px;" />
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Introduction / About -->
+<section class="section-premium alt-bg">
+    <div class="container">
+        <div class="row align-items-center g-5">
+            <div class="col-lg-5">
+                <div class="position-relative">
+                    <img src="~/staticimage/hero_section_img.jpg" class="img-fluid rounded-4 collage-img w-100" alt="About Mansi">
+                    <!-- Floating Stat Card -->
+                    <div class="position-absolute bottom-0 end-0 m-4 p-4 glass-card text-center" style="transform: translate(20px, 20px);">
+                        <h3 style="color: var(--rose-gold); margin: 0;">5+</h3>
+                        <p class="small mb-0" style="color: #666; font-weight: 600;">Years of AI Research</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-7 ps-lg-5">
+                <h2 class="display-5 mb-4">Bridging AI with Sustainable Infrastructure</h2>
+                <div class="fs-5 text-secondary" style="line-height: 1.8;">
+                    <p>I hold a Master of Technology (MTech) in Cyber Security, which provided a strong foundation in protecting systems and managing digital infrastructures. Since then, my academic journey has evolved toward utilizing advanced AI techniques to solve real-world problems in energy distribution.</p>
+
+                    <p>I am currently pursuing a Ph.D. at the Slovak University of Technology, focusing on Deep Learning methodologies and Computer Vision.</p>
+
+                    <p class="mb-0">My current research focuses on Short-Term Electric Load Forecasting (STLF), exploring hybrid models and optimized feature selection techniques to improve the accuracy of energy management systems in smart microgrids.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Mission Cards -->
+<section class="section-premium">
+    <div class="container">
+        <div class="text-center mb-5">
+            <h2 class="display-4">My Core Mission</h2>
+            <p class="lead text-secondary mx-auto" style="max-width: 700px;">Connecting research with real-world applications to tackle global resource challenges and support future innovators.</p>
+        </div>
+
+        <div class="row g-4">
+
+            <div class="col-md-4">
+                <div class="mission-card">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Research">
+                    <h4>Research</h4>
+                    <p>Exploring innovative ML models and AI solutions for reliable short-term electric load forecasting and secure grid optimization.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mission-card" style="transform: translateY(-20px);">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Mentorship">
+                    <h4>Mentorship</h4>
+                    <p>Fostering quantitative growth, programming confidence, and active opportunities for early-career researchers globally.</p>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="mission-card">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Outreach">
+                    <h4>Outreach</h4>
+                    <p>Engaging in active public communication to make data science, AI infrastructure, and cyber security accessible to everyone.</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<!-- Recent Blogs (Previewing the Spanish/English ECR community) -->
+@* <section class="section-premium alt-bg">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <span class="blog-tag">LATEST INSIGHTS</span>
+                <h2 class="display-5">Read My Blog</h2>
+            </div>
+            <a href="/Home/Blog" class="btn btn-outline-dark rounded-pill px-4" style="border-color: var(--dark-charcoal);">View All Posts</a>
+        </div>
+
+        <div class="row g-4">
+            
+            <div class="col-md-4">
+                <div class="premium-blog-card">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Post 1">
+                    <div class="blog-body">
+                        <span class="blog-tag">ACADEMIA</span>
+                        <h5>Navigating Your Research Area Early On</h5>
+                        <p class="text-muted small">March 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="premium-blog-card">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Post 2">
+                    <div class="blog-body">
+                        <span class="blog-tag">SMART GRIDS</span>
+                        <h5>Optimizing PyTorch Models for Sensors</h5>
+                        <p class="text-muted small">February 2026</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="premium-blog-card">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Post 3">
+                    <div class="blog-body">
+                        <span class="blog-tag">CYBER SECURITY</span>
+                        <h5>Data Integrity in Edge Devices</h5>
+                        <p class="text-muted small">January 2026</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</section> *@
+<section class="section-premium alt-bg">
+    <div class="container">
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <span class="blog-tag">LATEST INSIGHTS</span>
+                <h2 class="display-5">Read My Blog</h2>
+            </div>
+            <a href="/Home/Blog" class="btn btn-outline-dark rounded-pill px-4" style="border-color: var(--dark-charcoal);">
+                View All Posts
+            </a>
+        </div>
+
+        <div class="row g-4">
+
+            @foreach (var item in Model)
+            {
+                <div class="col-md-4">
+                    <a href="/Home/BlogDetail/@item.Id" style="text-decoration:none; color:inherit;">
+                        <div class="premium-blog-card">
+
+                            <!-- 🔹 Dynamic Image -->
+                            <img src="@item.ImageUrl" alt="@item.Title">
+
+                            <div class="blog-body">
+
+                                <!-- 🔹 Category -->
+                                <span class="blog-tag">@item.Category</span>
+
+                                <!-- 🔹 Title -->
+                                <h5>@item.Title</h5>
+
+                                <!-- 🔹 Date -->
+                                <p class="text-muted small">
+                                    @item.CreatedDate.ToString("MMMM yyyy")
+                                </p>
+
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            }
+
+        </div>
+    </div>
+</section>

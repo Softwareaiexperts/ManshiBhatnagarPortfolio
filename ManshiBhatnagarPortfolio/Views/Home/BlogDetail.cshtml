@@ -1,0 +1,185 @@
+﻿@{
+    ViewData["Title"] = "Blog Article";
+}
+<!-- Import Blog CSS to utilize our newly constructed detail classes -->
+<link href="~/css/BlogDetails.css" rel="stylesheet" />
+
+@* <section class="blog-page-bg mt-5 pt-5">
+    <div class="blog-container mt-4">
+
+        <!-- LEFT COLUMN: The Actual Article -->
+        <div class="article-content" style="background: white; padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(144, 114, 126, 0.05);">
+            
+            <span class="blog-tag">DEEP LEARNING</span>
+            
+            <div class="article-header">
+                <h1>How Meta-Heuristic Algorithms are Stabilizing the Grid</h1>
+                
+                <div class="author-plate">
+                    <img src="~/staticimage/hero_section_img.jpg" alt="Mansi Bhatnagar" class="author-avatar" />
+                    <div class="author-info">
+                        <h5>Mansi Bhatnagar</h5>
+                        <span>March 12, 2026 • 8 min read</span>
+                    </div>
+                </div>
+            </div>
+
+            <img src="~/staticimage/hero_section_img.jpg" alt="Article Cover" class="article-main-image" />
+
+            <div class="article-body">
+                <p>
+                    As cities transition to renewable energy sources, managing the fluctuations in power distribution becomes a monumental task. The integration of unpredictive energy providers like solar and wind disrupts standard forecasting models.
+                </p>
+
+                <p>
+                    This is where advanced metadata structures come into play. By replacing traditional statistical regression with predictive algorithms, we can parse thousands of real-time sensory inputs within milliseconds to appropriately gauge demand before a blackout occurs. But how do we accurately select which features matter in a dataset that spans an entire city's network?
+                </p>
+
+                <div class="article-quote">
+                    "Intelligent systems are no longer an addition to the modern grid; they are the foundational necessity orchestrating sustainable flow."
+                </div>
+
+                <h2>The Role of Temporal Convolutional Networks</h2>
+                <p>
+                    Unlike standard recurrent models, a Temporal Convolutional Network (TCN) views incoming data as a massive parallel sequence rather than an iterative block. Our latest simulated models demonstrated a 14% improvement in short-term processing speed over traditional LSTM algorithms while mapping a randomized multi-node municipal sector.
+                </p>
+                <p>
+                    Furthermore, applying nature-inspired optimizations—such as the Polar Bear Optimization algorithm we deployed in 2024—allows these neural nets to break out of predictive traps and maintain extreme accuracy across volatile edge cases. I'll be publishing the complete GitHub repository for this specific topology validation next quarter for the broader deep-learning community.
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- RIGHT COLUMN: Sidebar (identical logic from your blog index) -->
+        <aside class="blog-sidebar">
+            
+            <div class="sidebar-widget">
+                <h3 class="widget-title">Latest Blogs</h3>
+                <ul class="latest-blogs-list">
+                    
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">How Meta-Heuristic Algorithms are Grid</a></h4>
+                            <span>Mar 12, 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">Protecting IoT Infrastructure</a></h4>
+                            <span>Feb 24, 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">Finding Your Research Niche in AI</a></h4>
+                            <span>Jan 06, 2026</span>
+                        </div>
+                    </li>
+
+                    <li class="latest-blog-item">
+                        <img src="~/staticimage/hero_section_img.jpg" class="latest-blog-img" alt="Blog Thumb">
+                        <div class="latest-blog-info">
+                            <h4><a href="/Home/BlogDetail">Computer Vision in Infrastructure</a></h4>
+                            <span>Dec 15, 2025</span>
+                        </div>
+                    </li>
+
+                </ul>
+            </div>
+
+             <div class="sidebar-widget">
+                <h3 class="widget-title">Categories</h3>
+                <ul class="list-unstyled" style="line-height:2.2;">
+                    <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Deep Learning (12)</a></li>
+                    <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Cyber Security (8)</a></li>
+                    <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Smart Grids (5)</a></li>
+                    <li><a href="#" style="color:#555; text-decoration:none;">&#8594; Academia & Mentorship (14)</a></li>
+                </ul>
+            </div>
+
+        </aside>
+
+    </div>
+</section>
+ *@
+@model Article
+
+<section class="blog-page-bg">
+    <div class="blog-container">
+
+        <!-- 🔹 LEFT: ARTICLE CONTENT -->
+        <div class="blog-feed">
+
+            <article class="blog-post-card">
+
+                <div class="blog-post-content">
+
+                    <!-- Category -->
+                    <span class="blog-tag">
+                        @Model.Category?.ToUpper()
+                    </span>
+
+                    <!-- Title -->
+                    <div class="article-header">
+                        <h1>@Model.Title</h1>
+
+                        <!-- Author -->
+                        <div class="author-plate">
+                            <img src="~/staticimage/hero_section_img.jpg" class="author-avatar" />
+
+                            <div class="author-info">
+                                <h5>@Model.Author</h5>
+                                <span>
+                                    @Model.CreatedDate.ToString("MMMM dd, yyyy") •
+                                    @Model.ReadTime min read
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Main Image -->
+                    <img src="@Model.ImageUrl" class="article-main-image" />
+
+                    <!-- Content -->
+                    <div class="article-body">
+                        @Html.Raw(Model.Content)
+                    </div>
+
+                </div>
+
+            </article>
+
+        </div>
+    </div>
+</section>
+
+@* <div class="container" style="max-width:800px;margin:auto;padding:20px;">
+
+    <p style="color:#999; letter-spacing:2px;">
+        @Model.Category?.ToUpper()
+    </p>
+
+    <h1 style="font-size:40px;font-weight:600;">
+        @Model.Title
+    </h1>
+
+    <div style="margin:10px 0;">
+        <strong>@Model.Author</strong><br />
+        <small>
+            @Model.CreatedDate.ToString("MMMM dd, yyyy") • @Model.ReadTime min read
+        </small>
+    </div>
+
+    <img src="@Model.ImageUrl" style="width:100%;border-radius:10px;margin:20px 0;" />
+
+    <div style="font-size:18px;line-height:1.8;">
+        @Html.Raw(Model.Content)
+    </div>
+
+</div> *@

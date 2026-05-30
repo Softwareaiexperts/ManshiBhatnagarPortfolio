@@ -1,0 +1,118 @@
+﻿/* Hero Styles */
+.hero-section {
+    position: relative;
+    height: 350px;
+    /* This creates the light, faded background look from your image */
+    background: linear-gradient(rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.7)), url('../staticimage/hero_section_img.jpg') center/cover no-repeat;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-title {
+    color: #4B2E61; /* Specific deep purple */
+    font-size: 3rem;
+    font-weight: 800;
+    font-family: sans-serif;
+    z-index: 1;
+}
+
+/* Wavy Divider - Stays white to blend with section below */
+.custom-shape-divider-bottom {
+    position: absolute;
+    bottom: -1px; /* Prevents tiny gap line */
+    left: 0;
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+}
+
+    .custom-shape-divider-bottom svg {
+        width: calc(100% + 1.3px);
+        height: 80px;
+    }
+
+    .custom-shape-divider-bottom .shape-fill {
+        fill: #FFFFFF;
+    }
+
+/* Content Layout */
+.research-content {
+    padding: 60px 20px;
+    background-color: #fff;
+}
+
+.container {
+    max-width: 1000px;
+    margin: 0 auto;
+    display: flex;
+    gap: 40px;
+    align-items: flex-start; /* Aligns text to top of image */
+}
+
+.image-column {
+    flex: 0 0 40%; /* Keeps image column slightly narrower */
+}
+
+.image-wrapper img {
+    width: 100%;
+    height: auto;
+    border-radius: 40px; /* High radius for that "squircle" look */
+    display: block;
+}
+
+.text-column {
+    flex: 1;
+    padding-top: 20px;
+}
+
+    .text-column h2 {
+        color: #4B2E61;
+        font-size: 1.8rem;
+        line-height: 1.2;
+        margin-bottom: 25px;
+        font-weight: 700;
+    }
+
+    .text-column p {
+        color: #666;
+        font-size: 1rem;
+        line-height: 1.5;
+        margin-bottom: 30px;
+    }
+
+.btn-learn {
+    display: inline-block;
+    background-color: #FF5E9E;
+    color: white;
+    padding: 10px 35px;
+    border-radius: 25px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+/* Flips the image to the right and text to the left */
+.container.reverse {
+    flex-direction: row; /* Default for desktop */
+}
+
+/* Optional: Add a very light grey background to alternate sections */
+.secondary-bg {
+    background-color: #f9f9f9;
+}
+
+/* Mobile responsive fix: Stack text on top of image on small screens */
+@media (max-width: 768px) {
+    .container.reverse {
+        flex-direction: column-reverse;
+    }
+
+    .container {
+        flex-direction: column;
+        text-align: center;
+    }
+
+    .image-column {
+        flex: 0 0 100%;
+    }
+}

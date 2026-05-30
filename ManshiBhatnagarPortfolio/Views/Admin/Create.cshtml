@@ -1,0 +1,62 @@
+﻿@model Article
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">➕ Add New Article</h2>
+
+<div class="card p-4">
+
+    <form asp-controller="Admin" asp-action="Create" method="post" enctype="multipart/form-data">
+
+        <div class="mb-3">
+            <label>Title</label>
+            <input asp-for="Title" class="form-control" />
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Author</label>
+                <input asp-for="Author" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Category</label>
+                <input asp-for="Category" class="form-control" />
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <label>Read Time (min)</label>
+                <input asp-for="ReadTime" class="form-control" />
+            </div>
+
+            <div class="col-md-6 mb-3">
+                <label>Upload Image</label>
+                <input type="file" name="image" class="form-control" />
+            </div>
+        </div>
+
+        <div class="mb-3">
+            <label>Content</label>
+            <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+        </div>
+
+        <button type="submit" class="btn btn-success">Publish</button>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#editor').summernote({
+                height: 300,
+                placeholder: 'Write your article content here...',
+                tabsize: 2
+            });
+        });
+    </script>
+}

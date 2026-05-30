@@ -1,0 +1,58 @@
+﻿@model GalleryImage
+
+@{
+    ViewData["Title"] = "Add Image";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">🖼️ Upload Gallery Image</h2>
+
+<div class="card p-4 shadow-sm">
+
+    <form asp-action="AddImage" method="post" enctype="multipart/form-data">
+
+        <!-- Image Upload -->
+        <div class="mb-3">
+            <label class="form-label">Select Image</label>
+            <input type="file" name="file" class="form-control" onchange="previewImage(event)" required />
+        </div>
+
+        <!-- Image Preview -->
+        <div class="mb-3 text-center">
+            <img id="preview" src="#" style="max-height:200px; display:none; border-radius:10px;" />
+        </div>
+
+        <!-- Title -->
+        <div class="mb-3">
+            <label class="form-label">Title</label>
+            <input asp-for="Title" class="form-control" placeholder="Enter image title" required />
+        </div>
+
+        <!-- Description -->
+        <div class="mb-3">
+            <label class="form-label">Description</label>
+            <textarea asp-for="Description" class="form-control" rows="3" placeholder="Enter description"></textarea>
+        </div>
+
+        <!-- Submit -->
+        <div class="d-flex justify-content-between">
+            <a href="/Admin/Index" class="btn btn-secondary">Back</a>
+            <button type="submit" class="btn btn-success">Upload</button>
+        </div>
+
+    </form>
+
+</div>
+
+<!-- 🔥 Image Preview Script -->
+<script>
+    function previewImage(event) {
+        var reader = new FileReader();
+        reader.onload = function () {
+            var output = document.getElementById('preview');
+            output.src = reader.result;
+            output.style.display = 'block';
+        };
+        reader.readAsDataURL(event.target.files[0]);
+    }
+</script>

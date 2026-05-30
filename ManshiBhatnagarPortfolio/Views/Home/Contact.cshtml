@@ -1,0 +1,109 @@
+﻿@{
+    ViewData["Title"] = "Contact";
+}
+<link href="~/css/ContactPage.css" rel="stylesheet" />
+
+<!-- Hero Section -->
+<section class="hero-contact">
+    <div class="hero-contact-content">
+        <h1 class="hero-contact-title">Let's Get in Touch</h1>
+        <p class="hero-contact-subtitle">Whether you have a question about my research, or just want to say hi, I'll try my best to get back to you.</p>
+    </div>
+    <div class="custom-shape-divider-bottom">
+        <svg data-name="Layer 1" xmlns="http://w3.org" viewBox="0 0 1200 120" preserveAspectRatio="none">
+            <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="#f8f9fa"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- Contact Layout -->
+<section class="contact-page-bg">
+    <div class="contact-container">
+
+        <!-- LEFT COLUMN: Contact Information -->
+        <div class="contact-info-column">
+            <h2>Contact Information</h2>
+            <p class="mb-5">
+                I am actively seeking collaborations in AI, open to speaking at academic seminars, and always happy to discuss smart grid optimization challenges. Feel free to reach out via the form, or follow me on my professional portals.
+            </p>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <span>&#9993;</span> <!-- Simple mail icon -->
+                </div>
+                <div class="info-text">
+                    <h4>Direct Email</h4>
+                    <p><a href="mailto:contact@mansibhatnagar.com">contact@mansibhatnagar.com</a></p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <span>&#128188;</span> <!-- Simple briefcase icon -->
+                </div>
+                <div class="info-text">
+                    <h4>LinkedIn</h4>
+                    <p><a href="#">Connect professionally</a></p>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="info-icon">
+                    <span>&#128218;</span> <!-- Simple book icon -->
+                </div>
+                <div class="info-text">
+                    <h4>Google Scholar & ResearchGate</h4>
+                    <p><a href="https://scholar.google.com/citations?user=3ii2fPEAAAAJ&hl=en" target="_blank">View my public citations</a></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- RIGHT COLUMN: Contact Form Wrapper -->
+        <div class="contact-form-column">
+            <div class="form-wrapper shadow-lg">
+                <h3>Send Me a Message</h3>
+                <form action="#" method="get" class="contact-form">
+
+                    <div class="form-group row">
+                        <div class="col-md-6 mb-3 mb-md-0">
+                            <label for="firstName">First Name</label>
+                            <input type="text" id="firstName" class="form-control" placeholder="John" required>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="lastName">Last Name</label>
+                            <input type="text" id="lastName" class="form-control" placeholder="Doe" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="subject">Topic / Subject</label>
+                        <select id="subject" class="form-control" required>
+                            <option value="">Select a topic...</option>
+                            <option value="research">Research Collaboration</option>
+                            <option value="speaking">Speaking Engagement</option>
+                            <option value="mentoring">Mentoring Question</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="message">Your Message</label>
+                        <textarea id="message" rows="5" class="form-control" placeholder="How can I help you?" required></textarea>
+                    </div>
+
+                    <button type="button" class="btn-submit">
+                        Send Message <span>&rarr;</span>
+                    </button>
+                    <p class="form-disclaimer mt-3 text-muted" style="font-size: 0.8rem;">* This form is currently illustrative for frontend UI purposes.</p>
+
+                </form>
+            </div>
+        </div>
+
+    </div>
+</section>

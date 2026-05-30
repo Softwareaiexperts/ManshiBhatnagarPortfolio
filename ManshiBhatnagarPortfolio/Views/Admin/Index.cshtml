@@ -1,0 +1,73 @@
+﻿@model List<Article>
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">📊 Admin Dashboard</h2>
+
+<!-- 🔹 ADMIN ACTION SECTION -->
+<div class="row mb-4">
+
+    <!-- Add Blog -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 text-center p-4">
+            <h4>📝 Add Blog</h4>
+            <p class="text-muted">Create and publish a new article</p>
+            <a href="/Admin/Create" class="btn btn-success">Add Blog</a>
+        </div>
+    </div>
+
+    <!-- Add Image -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 text-center p-4">
+            <h4>🖼️ Add Image</h4>
+            <p class="text-muted">Upload and manage images</p>
+            <a href="/Admin/AddImage" class="btn btn-info">Add Image</a>
+        </div>
+    </div>
+
+    <!-- Manage Articles -->
+    <div class="col-md-4">
+        <div class="card shadow-sm border-0 text-center p-4">
+            <h4>📄 Articles</h4>
+            <p class="text-muted">View, edit and delete articles</p>
+            <a href="#articlesTable" class="btn btn-primary">Manage</a>
+        </div>
+    </div>
+
+</div>
+
+<!-- 🔹 ARTICLES TABLE -->
+<div class="card p-3" id="articlesTable">
+    <table class="table table-hover">
+        <thead class="table-light">
+            <tr>
+                <th>Image</th>
+                <th>Title</th>
+                <th>Category</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>
+                        <img src="@item.ImageUrl" width="60" style="border-radius:6px;" />
+                    </td>
+
+                    <td>@item.Title</td>
+                    <td>@item.Category</td>
+                    <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
+
+                    <td>
+                        <a href="/Admin/Edit/@item.Id" class="btn btn-sm btn-warning">Edit</a>
+                        <a href="/Admin/DeleteArtical/@item.Id" class="btn btn-sm btn-danger">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

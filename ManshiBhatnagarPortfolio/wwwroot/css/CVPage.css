@@ -1,0 +1,173 @@
+﻿/* CV Page Custom Styles */
+.cv-hero {
+    height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    background: radial-gradient(circle at center, #fff0f5 0%, #fffafb 100%);
+    border-bottom: 1px solid rgba(244, 143, 177, 0.2);
+}
+
+.cv-title {
+    font-size: 3.5rem;
+    font-weight: 700;
+    margin-bottom: 15px;
+    color: var(--dark-charcoal);
+}
+
+.cv-subtitle {
+    font-size: 1.2rem;
+    color: #777;
+    margin-bottom: 30px;
+}
+
+.btn-download-cv {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--rose-gold), #ebc14d);
+    color: white;
+    padding: 12px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: 600;
+    box-shadow: 0 5px 15px rgba(212, 175, 55, 0.4);
+    transition: transform 0.3s ease;
+}
+
+    .btn-download-cv:hover {
+        transform: translateY(-3px);
+        color: white;
+    }
+
+.bg-light-cream {
+    background-color: var(--bg-color);
+    padding: 80px 0;
+}
+
+.cv-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+    gap: 60px;
+}
+
+.cv-section-header {
+    font-size: 2rem;
+    color: var(--dark-charcoal);
+    margin-bottom: 30px;
+    padding-bottom: 10px;
+    border-bottom: 2px solid var(--blush-pink);
+    display: inline-block;
+}
+
+/* Timeline */
+.timeline {
+    position: relative;
+    padding-left: 30px;
+    border-left: 2px dashed rgba(244, 143, 177, 0.5);
+}
+
+.timeline-item {
+    position: relative;
+    padding: 30px;
+    margin-bottom: 30px;
+    transition: transform 0.3s ease;
+}
+
+    .timeline-item:hover {
+        transform: translateX(5px);
+    }
+
+.timeline-dot {
+    position: absolute;
+    left: -39px;
+    top: 30px;
+    width: 16px;
+    height: 16px;
+    border-radius: 50%;
+    background-color: var(--blush-pink);
+    border: 3px solid white;
+    box-shadow: 0 0 10px rgba(244, 143, 177, 0.5);
+}
+
+.timeline-date {
+    display: inline-block;
+    color: var(--rose-gold);
+    font-weight: 700;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.timeline-item h3 {
+    font-size: 1.5rem;
+    margin: 0 0 5px 0;
+}
+
+.timeline-item h4 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.1rem;
+    color: #777;
+    margin: 0 0 15px 0;
+}
+
+.sidebar-title {
+    font-size: 1.5rem;
+    margin-bottom: 25px;
+    color: var(--dark-charcoal);
+}
+
+/* Skills */
+.skilss-block, .awards-block {
+    padding: 30px;
+}
+
+.skill-item {
+    margin-bottom: 20px;
+}
+
+    .skill-item span {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 8px;
+        font-size: 0.95rem;
+    }
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background-color: rgba(0,0,0,0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--blush-pink), var(--rose-gold));
+    border-radius: 10px;
+}
+
+.pub-list {
+    list-style: none;
+    padding: 0;
+}
+
+    .pub-list li {
+        margin-bottom: 20px;
+        line-height: 1.6;
+        padding-bottom: 20px;
+        border-bottom: 1px dashed rgba(0,0,0,0.1);
+    }
+
+        .pub-list li:last-child {
+            border: none;
+            margin: 0;
+            padding: 0;
+        }
+
+@media (max-width: 900px) {
+    .cv-container {
+        grid-template-columns: 1fr;
+    }
+}

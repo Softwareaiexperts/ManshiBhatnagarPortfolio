@@ -1,0 +1,130 @@
+﻿@{
+    ViewData["Title"] = "Articles & Projects";
+}
+<link href="~/css/ProjectsPage.css" rel="stylesheet" />
+
+<section class="projects-hero">
+    <div class="projects-hero-content">
+        <h1 class="projects-title">Articles & Projects</h1>
+        <p class="projects-subtitle">A curated index of my academic publications, research deployments, and technical contributions.</p>
+    </div>
+</section>
+
+<section class="projects-body bg-light-cream">
+    <div class="container project-container">
+
+        <!-- Category Filter -->
+        <div class="project-filters text-center mb-5">
+            <button class="filter-btn active" onclick="filterProjects('all')">All</button>
+            <button class="filter-btn" onclick="filterProjects('energy')">Energy Optimization</button>
+            <button class="filter-btn" onclick="filterProjects('ml')">Machine Learning</button>
+            <button class="filter-btn" onclick="filterProjects('cyber')">Cyber Defense</button>
+        </div>
+
+        <div class="row g-5">
+            <!-- Article 1 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="energy">
+                <article class="project-glass-card h-100">
+                    <span class="domain-tag tag-energy">Energy Optimization</span>
+                    <h3 class="paper-title mt-3">Using Crafted Features and Polar Bear Optimization Algorithm for STLF</h3>
+                    <p class="paper-meta">Published: 2024 • Smart Grid Logistics</p>
+                    <p class="paper-desc">
+                        My primary exploration into utilizing highly advanced meta-heuristic behaviors—specifically the Polar Bear Optimization—to drastically reduce mean-absolute-percentages of forecasting errors in electric networks.
+                    </p>
+                    <a href="#" class="btn-read-paper">Read Publication</a>
+                </article>
+            </div>
+
+            <!-- Article 2 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="cyber">
+                <article class="project-glass-card h-100">
+                    <span class="domain-tag tag-cyber">Cyber Defense</span>
+                    <h3 class="paper-title mt-3">Web Intrusion Classification System using Machine Learning</h3>
+                    <p class="paper-meta">Published: 2022 • CyberTech Systems</p>
+                    <p class="paper-desc">
+                        A robust analysis of deploying live machine learning models onto edge sensors to accurately filter and classify distributed web intrusions before they breach foundational municipal architectures.
+                    </p>
+                    <a href="#" class="btn-read-paper">Read Publication</a>
+                </article>
+            </div>
+
+            <!-- Article 3 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="ml">
+                <article class="project-glass-card h-100">
+                    <span class="domain-tag tag-ml">Machine Learning</span>
+                    <h3 class="paper-title mt-3">Comprehensive Electric Load Forecasting using Ensemble Methods</h3>
+                    <p class="paper-meta">Published: 2022 • Data Congress</p>
+                    <p class="paper-desc">
+                        Blending multiple algorithmic architectures (Random Forest, Extreme Gradient Boosting) into a single ensemble to cross-verify short-term energy requirements globally.
+                    </p>
+                    <a href="#" class="btn-read-paper">Read Publication</a>
+                </article>
+            </div>
+
+            <!-- Article 4 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="energy">
+                <article class="project-glass-card h-100">
+                    <span class="domain-tag tag-energy">Energy Optimization</span>
+                    <h3 class="paper-title mt-3">STLF Using Random Forest with Entropy-Based Feature Selection</h3>
+                    <p class="paper-meta">Published: 2022 • EU Energy Models</p>
+                    <p class="paper-desc">
+                        Utilizing deep entropy variables to algorithmically select the most reliable node features, increasing network forecasting speed organically across interconnected power grids.
+                    </p>
+                    <a href="#" class="btn-read-paper">Read Publication</a>
+                </article>
+            </div>
+
+            <!-- Article 5 -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="ml">
+                <article class="project-glass-card h-100">
+                    <span class="domain-tag tag-ml">Machine Learning</span>
+                    <h3 class="paper-title mt-3">AI in Agriculture: Efficient Plant Disease Detection</h3>
+                    <p class="paper-meta">Published: 2022 • AI Biotech</p>
+                    <p class="paper-desc">
+                        An adjacent venture applying Computer Vision models to agricultural sectors, automating the visual detection and classification of early-stage biological plant stressors.
+                    </p>
+                    <a href="#" class="btn-read-paper">Read Publication</a>
+                </article>
+            </div>
+
+            <!-- Ongoing Project Feature -->
+            <div class="col-lg-4 col-md-6 project-item" data-category="ml">
+                <article class="project-glass-card highlight-card h-100">
+                    <div class="highlight-badge">ONGOING LAB PROJECT</div>
+                    <h3 class="paper-title mt-3 text-white">Project Delta: Visual Node Anomaly Tracking</h3>
+                    <p class="paper-meta text-light">Status: Alpha • Python, PyTorch</p>
+                    <p class="paper-desc text-light opacity-75">
+                        Building a comprehensive visual dashboard to seamlessly monitor and isolate STLF failures natively via convolutional neural networks. Private repository until 2026.
+                    </p>
+                    <a href="#" class="btn-read-paper btn-white mt-auto">View Demo Specs</a>
+                </article>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+@section Scripts {
+    <script>
+        function filterProjects(category) {
+            // Update active states on buttons
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Hide/Show projects
+            document.querySelectorAll('.project-item').forEach(item => {
+                if (category === 'all') {
+                    item.style.display = 'block';
+                } else {
+                    if (item.getAttribute('data-category') === category) {
+                        item.style.display = 'block';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                }
+            });
+        }
+    </script>
+}

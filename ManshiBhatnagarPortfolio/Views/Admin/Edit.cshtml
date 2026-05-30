@@ -1,0 +1,76 @@
+﻿@model Article
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2 class="mb-4">✏️ Edit Article</h2>
+
+<div class="card p-4">
+
+    <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
+
+        <input type="hidden" asp-for="Id" />
+        <input type="hidden" asp-for="CreatedDate" />
+
+        <div class="mb-3">
+            <label>Title</label>
+            <input asp-for="Title" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Author</label>
+            <input asp-for="Author" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Current Image</label><br />
+
+            @if (!string.IsNullOrEmpty(Model.ImageUrl))
+            {
+                <img src="@Model.ImageUrl" alt="Article Image"
+                     style="max-width:200px; border-radius:8px; margin-bottom:10px;" />
+            }
+            else
+            {
+                <p>No image uploaded</p>
+            }
+        </div>
+
+        <div class="mb-3">
+            <label>Change Image</label>
+            <input type="file" name="imageFile" class="form-control" />
+        </div>
+
+        <!-- keep old image -->
+        <input type="hidden" asp-for="ImageUrl" />
+
+        <div class="mb-3">
+            <label>Category</label>
+            <input asp-for="Category" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Read Time</label>
+            <input asp-for="ReadTime" class="form-control" />
+        </div>
+
+        <div class="mb-3">
+            <label>Content</label>
+            <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+        </div>
+
+        <button class="btn btn-primary">Update</button>
+
+    </form>
+
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            $('#editor').summernote({
+                height: 300
+            });
+        });
+    </script>
+}

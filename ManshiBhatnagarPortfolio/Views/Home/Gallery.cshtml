@@ -1,0 +1,117 @@
+﻿@model List<GalleryImage>
+@{
+    ViewData["Title"] = "Gallery";
+}
+
+<link href="~/css/GalleryPage.css" rel="stylesheet" />
+
+@*<section class="gallery-hero">
+    <div class="gallery-hero-content">
+        <h1 class="gallery-title">Visual Journey</h1>
+        <p class="gallery-subtitle">A collection of moments from global seminars, lab research, and tech mentorship programs.</p>
+    </div>
+</section>
+
+<section class="gallery-body bg-light-cream">
+    <div class="gallery-masonry-container">
+        
+        <div class="masonry-item">
+            <img src="~/staticimage/hero_section_img.jpg" alt="Gallery Image 1" class="masonry-img organic-image-soft">
+            <div class="masonry-overlay glass-card">
+                <h3>Keynote Speech</h3>
+                <p>Global Tech Summit, 2025</p>
+            </div>
+        </div>
+
+        <div class="masonry-item">
+            <img src="~/staticimage/hero_section_img.jpg" alt="Gallery Image 2" class="masonry-img organic-image-soft">
+            <div class="masonry-overlay glass-card">
+                <h3>Lab Work</h3>
+                <p>Analyzing grid optimization</p>
+            </div>
+        </div>
+
+        <div class="masonry-item">
+            <img src="~/staticimage/hero_section_img.jpg" alt="Gallery Image 3" class="masonry-img organic-image-soft">
+            <div class="masonry-overlay glass-card">
+                <h3>Student Mentorship</h3>
+                <p>Guiding the next developers</p>
+            </div>
+        </div>
+
+        <div class="masonry-item">
+            <img src="~/staticimage/hero_section_img.jpg" alt="Gallery Image 4" class="masonry-img organic-image-soft">
+            <div class="masonry-overlay glass-card">
+                <h3>Panel Discussion</h3>
+                <p>Women in Tech, 2024</p>
+            </div>
+        </div>
+
+        <div class="masonry-item">
+            <img src="~/staticimage/hero_section_img.jpg" alt="Gallery Image 5" class="masonry-img organic-image-soft">
+            <div class="masonry-overlay glass-card">
+                <h3>Deep Learning Bootcamp</h3>
+                <p>Practical PyTorch sessions</p>
+            </div>
+        </div>
+        
+    </div>
+</section>
+ *@
+
+<!-- 🔹 HERO SECTION -->
+<section class="gallery-hero">
+    <div class="gallery-hero-content">
+        <h1 class="gallery-title">Visual Journey</h1>
+        <p class="gallery-subtitle">
+            A collection of moments from global seminars, lab research, and tech mentorship programs.
+        </p>
+    </div>
+</section>
+
+<!-- 🔹 GALLERY BODY -->
+<section class="gallery-body bg-light-cream">
+    <div class="gallery-masonry-container">
+
+        @{
+            var index = 0;
+        }
+
+        @foreach (var item in Model)
+        {
+            var cssClass = "masonry-item";
+
+            if (index % 5 == 0)
+            {
+                cssClass += " tall";
+            }
+            else if (index % 3 == 0)
+            {
+                cssClass += " wide";
+            }
+
+            <div class="@cssClass">
+                <img src="@item.ImageUrl"
+                     alt="@item.Title"
+                     class="masonry-img organic-image-soft" />
+
+                <div class="masonry-overlay glass-card">
+                    <h3>@item.Title</h3>
+                    <p>@item.Description</p>
+                </div>
+            </div>
+
+            index++;
+        }
+
+    </div>
+</section>
+
+<!-- 🔥 OPTIONAL: EMPTY STATE -->
+@if (Model == null || !Model.Any())
+{
+    <div class="text-center p-5">
+        <h4>No images found</h4>
+        <p class="text-muted">Upload images from admin panel</p>
+    </div>
+}

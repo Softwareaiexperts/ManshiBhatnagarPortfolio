@@ -1,0 +1,94 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - Manshi Bhatnagar</title>
+    <script type="importmap"></script>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="~/css/homepage.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.css" rel="stylesheet">
+
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-light bg-glass fixed-top px-lg-5" id="mainNavbarContainer">
+            <div class="container-fluid">
+                <!-- Logo -->
+                <a class="navbar-brand logo" href="#">Mansi Bhatnagar</a>
+
+                <!-- Bootstrap Mobile Toggle -->
+                <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <!-- Navigation Links -->
+                <div class="collapse navbar-collapse" id="mainNavbar">
+                    <ul class="navbar-nav mx-auto mb-2 mb-lg-0 align-items-center">
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Index" || ViewContext.RouteData.Values["Action"]?.ToString() == null ? "active" : "")" asp-controller="Home" asp-action="Index">About</a></li>
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "CV" ? "active" : "")" asp-controller="Home" asp-action="CV">CV</a></li>
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Research" ? "active" : "")" asp-controller="Home" asp-action="Research">Research</a></li>
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Gallery" ? "active" : "")" asp-controller="Home" asp-action="Gallery">Gallery</a></li>
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Projects" ? "active" : "")" asp-controller="Home" asp-action="Projects">Projects</a></li>
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Blog" ? "active" : "")" asp-controller="Home" asp-action="Blog">Blog</a></li>
+                        <li class="nav-item"><a class="nav-link px-3 @(ViewContext.RouteData.Values["Action"]?.ToString() == "Contact" ? "active" : "")" asp-controller="Home" asp-action="Contact">Contact</a></li>
+                        <!-- CTA Button -->
+                        @*  <li class="nav-item ms-lg-3">
+                            <a href="#" class="btn cta-button">Get My Book</a>
+                        </li> *@
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container-fluid">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="main-footer">
+        <div class="container">
+            <div class="row gy-4 align-items-center">
+
+                <!-- 🔹 Brand Section -->
+                <div class="col-lg-6 text-center text-lg-start">
+                    <h2 class="footer-logo">Dr. Mansi Bhatnagar</h2>
+                    <p class="footer-text">
+                        Researcher in Computer Vision, Deep Learning, and Smart Grid Optimization.
+                        Passionate about bridging AI with real-world energy systems.
+                    </p>
+                </div>
+
+                <!-- 🔹 Social Section -->
+                <div class="col-lg-6 text-center text-lg-end">
+                    <h5 class="footer-title">Connect With Me</h5>
+
+                    <div class="social-icons">
+                        <a href="#" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                        <a href="#" title="Twitter"><i class="fab fa-x-twitter"></i></a>
+                        <a href="#" title="ResearchGate"><i class="fab fa-researchgate"></i></a>
+                        <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 🔹 Bottom -->
+            <div class="footer-bottom">
+                <p>© 2026 Dr. Mansi Bhatnagar • All Rights Reserved</p>
+            </div>
+        </div>
+    </footer>
+    <!-- jQuery FIRST -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+
+</body>
+</html>
