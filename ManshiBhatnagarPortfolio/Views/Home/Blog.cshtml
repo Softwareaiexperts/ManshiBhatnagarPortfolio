@@ -1,4 +1,4 @@
-﻿@model BlogPageViewModel
+@model BlogPageViewModel
 @{
     ViewData["Title"] = "Blog";
 }
@@ -95,11 +95,11 @@
                             @item.Title
                         </a>
 
-                        <p class="blog-post-excerpt">
-                            @(item.Content != null && item.Content.Length > 150
-                                                    ? item.Content.Substring(0, 150) + "..."
-                                                    : item.Content)
-                    </p>
+                        @{
+                            var cleanContent = item.Content != null ? System.Text.RegularExpressions.Regex.Replace(item.Content, "<.*?>", string.Empty) : "";
+                            var excerpt = cleanContent.Length > 150 ? cleanContent.Substring(0, 150) + "..." : cleanContent;
+                        }
+                        <p class="blog-post-excerpt">@excerpt</p>
 
                         <div class="blog-meta">
                             <span>

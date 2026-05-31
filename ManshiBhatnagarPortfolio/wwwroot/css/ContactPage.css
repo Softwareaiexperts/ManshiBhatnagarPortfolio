@@ -1,35 +1,37 @@
-﻿/* Hero Styles */
+/* Hero Styles */
 .hero-contact {
-    position: relative;
-    height: 450px;
-    background: linear-gradient(rgba(240, 244, 255, 0.9), rgba(240, 244, 255, 0.9)), url('../staticimage/hero_section_img.jpg') center/cover no-repeat;
+    height: 350px;
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
+    background: radial-gradient(circle at bottom left, #fff0f5 0%, #ffffff 100%);
+    border-bottom: 1px solid rgba(244, 143, 177, 0.1);
     overflow: hidden;
 }
 
 .hero-contact-content {
     z-index: 1;
     padding: 0 20px;
-    max-width: 800px;
 }
 
 .hero-contact-title {
-    color: #4a2c6a;
+    color: var(--dark-charcoal);
     font-size: 3.5rem;
-    font-weight: 800;
+    font-weight: 700;
     margin: 0 0 15px 0;
-    font-family: 'Segoe UI', sans-serif;
+    font-family: 'Playfair Display', serif;
 }
 
 .hero-contact-subtitle {
-    color: #4a2c6a;
+    color: #777;
     font-size: 1.2rem;
     line-height: 1.5;
     font-weight: 400;
     margin: 0;
+    max-width: 700px;
+    margin-left: auto;
+    margin-right: auto;
 }
 
 /* Page Background */

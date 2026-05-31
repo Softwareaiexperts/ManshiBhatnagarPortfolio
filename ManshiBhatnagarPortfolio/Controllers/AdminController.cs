@@ -1,6 +1,9 @@
 using ManshiBhatnagarPortfolio.Data;
 using ManshiBhatnagarPortfolio.Models;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text;
+using System.Linq;
 
 namespace ManshiBhatnagarPortfolio.Controllers
 {
@@ -8,11 +11,13 @@ namespace ManshiBhatnagarPortfolio.Controllers
     {
         private readonly ApplicationDbContext _context;
         private readonly IWebHostEnvironment _env;
+        private readonly IConfiguration _configuration;
 
-        public AdminController(ApplicationDbContext context, IWebHostEnvironment env)
+        public AdminController(ApplicationDbContext context, IWebHostEnvironment env, IConfiguration configuration)
         {
             _context = context;
             _env = env;
+            _configuration = configuration;
         }
 
         public IActionResult Index()
@@ -245,6 +250,134 @@ namespace ManshiBhatnagarPortfolio.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("Index");
+        }
+
+        public override void OnActionExecuting(Microsoft.AspNetCore.Mvc.Filters.ActionExecutingContext context)
+        {
+            var actionDescriptor = context.ActionDescriptor as Microsoft.AspNetCore.Mvc.Controllers.ControllerActionDescriptor;
+            var actionName = actionDescriptor?.ActionName;
+
+            var bypassActions = new[] { "Login", "ProcessGoogleLogin", "DevLogin", "Logout" };
+
+            if (actionName != null && !bypassActions.Contains(actionName))
+            {
+                var adminEmail = HttpContext.Session.GetString("AdminEmail");
+                if (string.IsNullOrEmpty(adminEmail))
+                {
+                    context.Result = RedirectToAction("Login");
+                }
+            }
+
+            base.OnActionExecuting(context);
+        }
+
+        [HttpGet]
+        public IActionResult Login()
+        {
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("AdminEmail")))
+            {
+                return RedirectToAction("Index");
+            }
+
+            ViewBag.ClientId = _configuration["Authentication:Google:ClientId"];
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult ProcessGoogleLogin([FromForm] string credential)
+        {
+            if (string.IsNullOrEmpty(credential))
+            {
+                TempData["LoginError"] = "Google sign-in credential was empty.";
+                return RedirectToAction("Login");
+            }
+
+            try
+            {
+                var tokenParts = credential.Split('.');
+                if (tokenParts.Length < 2)
+                {
+                    TempData["LoginError"] = "Invalid Google credential token format.";
+                    return RedirectToAction("Login");
+                }
+
+                var payload = tokenParts[1];
+                var padLength = 4 - (payload.Length % 4);
+                if (padLength < 4) payload = payload.PadRight(payload.Length + padLength, '=');
+                
+                var jsonBytes = Convert.FromBase64String(payload);
+                var jsonString = System.Text.Encoding.UTF8.GetString(jsonBytes);
+
+                using (var doc = JsonDocument.Parse(jsonString))
+                {
+                    var root = doc.RootElement;
+                    if (root.TryGetProperty("email", out var emailProp))
+                    {
+                        string email = emailProp.GetString() ?? "";
+                        
+                        var allowedAdminsStr = _configuration["AllowedAdmins"] ?? "";
+                        var allowedAdmins = allowedAdminsStr.Split('|', StringSplitOptions.RemoveEmptyEntries)
+                                                            .Select(x => x.Trim().ToLower())
+                                                            .ToList();
+
+                        if (allowedAdmins.Contains(email.ToLower()))
+                        {
+                            HttpContext.Session.SetString("AdminEmail", email);
+                            HttpContext.Session.SetString("AdminName", root.TryGetProperty("name", out var nameProp) ? nameProp.GetString() ?? "Admin" : "Admin");
+                            HttpContext.Session.SetString("AdminAvatar", root.TryGetProperty("picture", out var picProp) ? picProp.GetString() ?? "" : "");
+                            
+                            return RedirectToAction("Index");
+                        }
+                        else
+                        {
+                            TempData["LoginError"] = $"Access Denied: '{email}' is not authorized in appsettings.json.";
+                            return RedirectToAction("Login");
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                TempData["LoginError"] = $"Authentication failed: {ex.Message}";
+            }
+
+            return RedirectToAction("Login");
+        }
+
+        [HttpPost]
+        public IActionResult DevLogin(string email)
+        {
+            if (string.IsNullOrEmpty(email))
+            {
+                TempData["LoginError"] = "Email cannot be empty.";
+                return RedirectToAction("Login");
+            }
+
+            var allowedAdminsStr = _configuration["AllowedAdmins"] ?? "";
+            var allowedAdmins = allowedAdminsStr.Split('|', StringSplitOptions.RemoveEmptyEntries)
+                                                .Select(x => x.Trim().ToLower())
+                                                .ToList();
+
+            if (allowedAdmins.Contains(email.ToLower()))
+            {
+                HttpContext.Session.SetString("AdminEmail", email);
+                HttpContext.Session.SetString("AdminName", "Developer Mode");
+                HttpContext.Session.SetString("AdminAvatar", "");
+                
+                return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["LoginError"] = $"Access Denied: '{email}' is not whitelisted in appsettings.json.";
+                return RedirectToAction("Login");
+            }
+        }
+
+        [HttpGet]
+        public IActionResult Logout()
+        {
+            HttpContext.Session.Clear();
+            return RedirectToAction("Login");
         }
     }
 }

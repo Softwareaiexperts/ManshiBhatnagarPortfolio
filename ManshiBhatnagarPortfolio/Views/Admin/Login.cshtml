@@ -1,0 +1,235 @@
+@{
+    Layout = null; // Self-contained premium page
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Mansi Bhatnagar</title>
+    
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #fce4ec 0%, #f3e5f5 100%);
+            --card-glass: rgba(255, 255, 255, 0.75);
+            --border-glass: rgba(255, 255, 255, 0.4);
+            --dark-charcoal: #2c2c2c;
+            --rose-gold: #c2185b;
+        }
+
+        body {
+            background: var(--primary-gradient);
+            font-family: 'Outfit', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow-x: hidden;
+            margin: 0;
+        }
+
+        /* Ambient floating blurred spheres for premium aesthetics */
+        .ambient-sphere {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.55;
+        }
+        .sphere-1 {
+            width: 300px;
+            height: 300px;
+            background: #ff80ab;
+            top: 10%;
+            left: 15%;
+            animation: float-1 8s infinite alternate;
+        }
+        .sphere-2 {
+            width: 400px;
+            height: 400px;
+            background: #b388ff;
+            bottom: 10%;
+            right: 15%;
+            animation: float-2 10s infinite alternate;
+        }
+
+        @@keyframes float-1 {
+            0% { transform: translateY(0px) scale(1); }
+            100% { transform: translateY(30px) scale(1.1); }
+        }
+        @@keyframes float-2 {
+            0% { transform: translateY(0px) scale(1.1); }
+            100% { transform: translateY(-40px) scale(0.9); }
+        }
+
+        .login-container {
+            z-index: 1;
+            width: 100%;
+            max-width: 500px;
+            padding: 20px;
+        }
+
+        .login-card {
+            background: var(--card-glass);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid var(--border-glass);
+            border-radius: 24px;
+            box-shadow: 0 15px 35px rgba(144, 114, 126, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .brand-logo {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--dark-charcoal);
+            letter-spacing: -0.5px;
+            font-family: 'Playfair Display', serif;
+        }
+
+        .divider {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #888;
+            font-size: 0.85rem;
+            margin: 24px 0;
+        }
+        .divider::before, .divider::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.08);
+        }
+        .divider:not(:empty)::before { margin-right: 15px; }
+        .divider:not(:empty)::after { margin-left: 15px; }
+
+        .btn-dev-submit {
+            background-color: var(--rose-gold);
+            color: white;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border-radius: 50px;
+        }
+        .btn-dev-submit:hover {
+            background-color: #ad1457;
+            transform: translateY(-1px);
+        }
+        
+        .g_id_signin {
+            display: flex;
+            justify-content: center;
+        }
+        
+        .config-badge {
+            font-size: 0.75rem;
+            border-radius: 50px;
+            padding: 4px 12px;
+            font-weight: 600;
+        }
+    </style>
+    
+    <!-- 🔹 Load Google Identity Services library -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+</head>
+<body>
+
+    <!-- Blurred background spheres -->
+    <div class="ambient-sphere sphere-1"></div>
+    <div class="ambient-sphere sphere-2"></div>
+
+    <div class="login-container">
+        
+        <div class="login-card p-4 p-md-5">
+            
+            <div class="text-center mb-4">
+                <span class="brand-logo">Dr. Mansi Bhatnagar</span>
+                <h5 class="fw-bold mt-3 text-dark">Admin Portal Gateway</h5>
+                <p class="text-muted small">Sign in using an authorized Gmail account to manage your portfolio, research, and visual logs.</p>
+            </div>
+
+            <!-- 🔹 ERROR NOTIFICATION -->
+            @if (TempData["LoginError"] != null)
+            {
+                <div class="alert alert-danger border-0 rounded-3 small p-3 mb-4 d-flex align-items-start" role="alert" style="background-color: rgba(220, 53, 69, 0.1); color: #dc3545;">
+                    <i class="fa-solid fa-circle-exclamation fa-lg me-2 mt-1"></i>
+                    <div>@Html.Raw(TempData["LoginError"])</div>
+                </div>
+            }
+
+            <!-- 🔹 GOOGLE SIGN IN CARD COMPONENT -->
+            <div class="text-center p-3 border rounded-3 bg-white mb-4">
+                <label class="form-label fw-bold text-muted small d-block mb-3">SECURE GMAIL SIGN-IN</label>
+                
+                @if (string.IsNullOrEmpty(ViewBag.ClientId))
+                {
+                    <div class="text-warning small mb-0 px-2 text-start">
+                        <i class="fa-solid fa-triangle-exclamation me-1"></i>
+                        <strong>Google Client ID is missing.</strong>
+                        <p class="mb-0 mt-1 text-muted xs-text" style="font-size: 0.8rem;">
+                            To enable the Google Sign-in button, configure `"Authentication:Google:ClientId"` in your `appsettings.json` file.
+                        </p>
+                    </div>
+                }
+                else
+                {
+                    <!-- Render Google Sign-in button -->
+                    <div id="g_id_onload"
+                         data-client_id="@ViewBag.ClientId"
+                         data-context="signin"
+                         data-ux_mode="redirect"
+                         data-login_uri="@Url.Action("ProcessGoogleLogin", "Admin", null, Context.Request.Scheme)">
+                    </div>
+                    <div class="g_id_signin"
+                         data-type="standard"
+                         data-shape="pill"
+                         data-theme="outline"
+                         data-text="signin_with"
+                         data-size="large"
+                         data-logo_alignment="left">
+                    </div>
+                }
+            </div>
+
+            <!-- 🔹 DEVELOPER SIMULATOR (PIPE WHITELIST TESTER) -->
+            <div class="divider">OR USE DEVELOPER BYPASS</div>
+
+            <div class="card bg-light border-0 rounded-3 p-3">
+                <div class="d-flex align-items-center justify-content-between mb-2">
+                    <span class="fw-bold text-muted small">DEVELOPER SIMULATOR</span>
+                    <span class="badge bg-secondary-light text-secondary config-badge" style="background-color: rgba(108,117,125,0.1);">appsettings whitelister</span>
+                </div>
+                
+                <p class="text-muted xs-text mb-3" style="font-size: 0.8rem;">
+                    Enter any whitelisted Gmail address configured in `appsettings.json` to simulate login authorization instantly!
+                </p>
+
+                <form asp-action="DevLogin" method="post">
+                    <div class="mb-3">
+                        <div class="input-group">
+                            <span class="input-group-text bg-white border-end-0"><i class="fa-solid fa-envelope text-muted"></i></span>
+                            <input type="email" name="email" class="form-control border-start-0 rounded-end-3" placeholder="e.g. chandankumar@gmail.com" required />
+                        </div>
+                    </div>
+                    
+                    <button type="submit" class="btn btn-dev-submit w-100 py-2 border-0 fw-bold">
+                        <i class="fa-solid fa-bolt me-1"></i> Simulate Authorized Login
+                    </button>
+                </form>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/" class="text-decoration-none text-muted small"><i class="fa-solid fa-arrow-left me-1"></i> Back to Portfolio</a>
+            </div>
+
+        </div>
+
+    </div>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

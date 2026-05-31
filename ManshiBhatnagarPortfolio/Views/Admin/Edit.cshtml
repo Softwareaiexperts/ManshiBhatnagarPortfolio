@@ -1,75 +1,167 @@
-﻿@model Article
+@model Article
 @{
     Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Edit Article";
 }
 
-<h2 class="mb-4">✏️ Edit Article</h2>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-10">
 
-<div class="card p-4">
+            <!-- Header -->
+            <div class="d-flex align-items-center justify-content-between mb-4">
+                <h2 class="h3 fw-bold mb-0 d-flex align-items-center">
+                    <i class="fa-solid fa-file-signature text-warning me-2"></i>
+                    <span>Edit Article Post</span>
+                </h2>
+                <a href="/Admin/Index" class="btn btn-outline-secondary rounded-pill px-4">
+                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
+                </a>
+            </div>
 
-    <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
+            <!-- Form Card -->
+            <div class="card border-0 shadow-sm rounded-3 overflow-hidden bg-glass">
+                <div class="card-body p-4 p-md-5">
 
-        <input type="hidden" asp-for="Id" />
-        <input type="hidden" asp-for="CreatedDate" />
+                    <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
+                        
+                        <input type="hidden" asp-for="Id" />
+                        <input type="hidden" asp-for="CreatedDate" />
+                        <input type="hidden" asp-for="ImageUrl" />
 
-        <div class="mb-3">
-            <label>Title</label>
-            <input asp-for="Title" class="form-control" />
+                        <!-- Title Input -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Article Title <span class="text-danger">*</span></label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-white"><i class="fa-solid fa-heading text-muted"></i></span>
+                                <input asp-for="Title" class="form-control" placeholder="Enter article title" required />
+                            </div>
+                            <span asp-validation-for="Title" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Author & Category Input -->
+                        <div class="row g-3 mb-4">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Author Name <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fa-solid fa-user-pen text-muted"></i></span>
+                                    <input asp-for="Author" class="form-control" placeholder="e.g. Dr. Mansi Bhatnagar" required />
+                                </div>
+                                <span asp-validation-for="Author" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Category <span class="text-danger">*</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fa-solid fa-tags text-muted"></i></span>
+                                    <input asp-for="Category" class="form-control" placeholder="e.g. Deep Learning, Cybersecurity" required />
+                                </div>
+                                <span asp-validation-for="Category" class="text-danger small"></span>
+                            </div>
+                        </div>
+
+                        <!-- Read Time & Image Upload -->
+                        <div class="row g-3 mb-4 align-items-end">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Estimated Read Time <span class="text-muted fw-normal">(minutes)</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fa-solid fa-clock text-muted"></i></span>
+                                    <input asp-for="ReadTime" type="number" class="form-control" placeholder="e.g. 5" min="1" required />
+                                </div>
+                                <span asp-validation-for="ReadTime" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-8">
+                                <label class="form-label fw-bold">Change Cover Image <span class="text-muted fw-normal">(Optional)</span></label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-white"><i class="fa-solid fa-file-image text-muted"></i></span>
+                                    <input type="file" name="imageFile" class="form-control" accept="image/*" />
+                                </div>
+                                <div class="form-text">Leave blank to keep current cover photo.</div>
+                            </div>
+                        </div>
+
+                        <!-- Current Image Display -->
+                        <div class="mb-4">
+                            <label class="form-label d-block fw-semibold text-muted small uppercase mb-2">Current Cover Image</label>
+                            <div class="d-inline-block rounded-3 overflow-hidden shadow-sm border border-light p-2 bg-white">
+                                @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                                {
+                                    <img src="@Model.ImageUrl" alt="Current Article Cover" style="max-height: 150px; max-width: 100%; object-fit: contain;" />
+                                }
+                                else
+                                {
+                                    <div class="text-muted p-3"><i class="fa-regular fa-image me-1"></i> No image uploaded</div>
+                                }
+                            </div>
+                        </div>
+
+                        <!-- Expanded Content Editor -->
+                        <div class="mb-4">
+                            <label class="form-label fw-bold mb-2">Write Article Content <span class="text-danger">*</span></label>
+                            <textarea asp-for="Content" id="editor" class="form-control" required></textarea>
+                            <span asp-validation-for="Content" class="text-danger small"></span>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="d-flex justify-content-end gap-2 pt-3 border-top">
+                            <a href="/Admin/Index" class="btn btn-light rounded-pill px-4">Cancel</a>
+                            <button type="submit" class="btn btn-warning text-dark fw-bold rounded-pill px-5 shadow-sm">
+                                <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
+                            </button>
+                        </div>
+
+                    </form>
+
+                </div>
+            </div>
+
         </div>
-
-        <div class="mb-3">
-            <label>Author</label>
-            <input asp-for="Author" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label>Current Image</label><br />
-
-            @if (!string.IsNullOrEmpty(Model.ImageUrl))
-            {
-                <img src="@Model.ImageUrl" alt="Article Image"
-                     style="max-width:200px; border-radius:8px; margin-bottom:10px;" />
-            }
-            else
-            {
-                <p>No image uploaded</p>
-            }
-        </div>
-
-        <div class="mb-3">
-            <label>Change Image</label>
-            <input type="file" name="imageFile" class="form-control" />
-        </div>
-
-        <!-- keep old image -->
-        <input type="hidden" asp-for="ImageUrl" />
-
-        <div class="mb-3">
-            <label>Category</label>
-            <input asp-for="Category" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label>Read Time</label>
-            <input asp-for="ReadTime" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label>Content</label>
-            <textarea asp-for="Content" id="editor" class="form-control"></textarea>
-        </div>
-
-        <button class="btn btn-primary">Update</button>
-
-    </form>
-
+    </div>
 </div>
+
+<style>
+    .bg-glass {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    .input-group-text {
+        border-right: none;
+    }
+    .form-control:focus + .input-group-text, .form-control:focus {
+        border-color: #ffc107;
+        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
+    }
+    .note-editor.note-frame {
+        border-radius: 12px !important;
+        overflow: hidden;
+        border: 1px solid #ced4da;
+    }
+    .note-toolbar {
+        background-color: #f8f9fa !important;
+        border-bottom: 1px solid #ced4da !important;
+    }
+</style>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $('#editor').summernote({
-                height: 300
+                height: 500, // Very large, high-flexibility height
+                placeholder: 'Start writing your premium research or blog article here. You can add tables, lists, images, embeds, and use full screen or HTML code edit view...',
+                tabsize: 2,
+                toolbar: [
+                    ['style', ['style']],
+                    ['font', ['bold', 'underline', 'clear', 'italic', 'strikethrough', 'superscript', 'subscript']],
+                    ['fontname', ['fontname']],
+                    ['fontsize', ['fontsize']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph', 'height']],
+                    ['table', ['table']],
+                    ['insert', ['link', 'picture', 'video', 'hr']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
             });
         });
     </script>
