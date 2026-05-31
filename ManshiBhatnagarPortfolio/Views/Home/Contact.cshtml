@@ -1,4 +1,5 @@
-﻿@{
+@model ManshiBhatnagarPortfolio.Models.ContactMessage
+@{
     ViewData["Title"] = "Contact";
 }
 <link href="~/css/ContactPage.css" rel="stylesheet" />
@@ -10,7 +11,7 @@
         <p class="hero-contact-subtitle">Whether you have a question about my research, or just want to say hi, I'll try my best to get back to you.</p>
     </div>
     <div class="custom-shape-divider-bottom">
-        <svg data-name="Layer 1" xmlns="http://w3.org" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <svg data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120" preserveAspectRatio="none">
             <path d="M985.66,92.83C906.67,72,823.78,31,743.84,14.19c-82.26-17.34-168.06-16.33-250.45.39-57.84,11.73-114,31.07-172,41.86A600.21,600.21,0,0,1,0,27.35V120H1200V95.8C1132.19,118.92,1055.71,111.31,985.66,92.83Z" fill="#f8f9fa"></path>
         </svg>
     </div>
@@ -60,46 +61,66 @@
 
         <!-- RIGHT COLUMN: Contact Form Wrapper -->
         <div class="contact-form-column">
-            <div class="form-wrapper shadow-lg">
-                <h3>Send Me a Message</h3>
-                <form action="#" method="get" class="contact-form">
+            <div class="form-wrapper shadow-lg bg-glass rounded-3 p-4 p-md-5">
+                <h3 class="mb-4 fw-bold">Send Me a Message</h3>
 
-                    <div class="form-group row">
-                        <div class="col-md-6 mb-3 mb-md-0">
-                            <label for="firstName">First Name</label>
-                            <input type="text" id="firstName" class="form-control" placeholder="John" required>
+                <!-- 🔹 SUCCESS FEEDBACK -->
+                @if (TempData["ContactSuccess"] != null)
+                {
+                    <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-3 p-3 mb-4 d-flex align-items-center" role="alert" style="background-color: rgba(40, 167, 69, 0.15); color: #198754;">
+                        <i class="fa-solid fa-circle-check fa-lg me-2"></i>
+                        <div class="fw-semibold">@TempData["ContactSuccess"]</div>
+                        <button type="button" class="btn-close ms-auto shadow-none" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                }
+
+                <form asp-action="Contact" asp-controller="Home" method="post" class="contact-form">
+                    
+                    <div class="form-group row g-3">
+                        <div class="col-md-6">
+                            <label asp-for="FirstName" class="form-label fw-semibold">First Name</label>
+                            <input asp-for="FirstName" class="form-control rounded-3" placeholder="John" required>
+                            <span asp-validation-for="FirstName" class="text-danger small"></span>
                         </div>
                         <div class="col-md-6">
-                            <label for="lastName">Last Name</label>
-                            <input type="text" id="lastName" class="form-control" placeholder="Doe" required>
+                            <label asp-for="LastName" class="form-label fw-semibold">Last Name</label>
+                            <input asp-for="LastName" class="form-control rounded-3" placeholder="Doe" required>
+                            <span asp-validation-for="LastName" class="text-danger small"></span>
                         </div>
                     </div>
 
-                    <div class="form-group">
-                        <label for="email">Email Address</label>
-                        <input type="email" id="email" class="form-control" placeholder="john@example.com" required>
+                    <div class="form-group mb-3">
+                        <label asp-for="Email" class="form-label fw-semibold">Email Address</label>
+                        <input asp-for="Email" class="form-control rounded-3" placeholder="john@example.com" required>
+                        <span asp-validation-for="Email" class="text-danger small"></span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="subject">Topic / Subject</label>
-                        <select id="subject" class="form-control" required>
+                    <div class="form-group mb-3">
+                        <label asp-for="Subject" class="form-label fw-semibold">Topic / Subject</label>
+                        <select asp-for="Subject" class="form-control rounded-3" required>
                             <option value="">Select a topic...</option>
-                            <option value="research">Research Collaboration</option>
-                            <option value="speaking">Speaking Engagement</option>
-                            <option value="mentoring">Mentoring Question</option>
-                            <option value="other">Other</option>
+                            <option value="Research Collaboration">Research Collaboration</option>
+                            <option value="Speaking Engagement">Speaking Engagement</option>
+                            <option value="Mentoring Question">Mentoring Question</option>
+                            <option value="Other">Other</option>
                         </select>
+                        <span asp-validation-for="Subject" class="text-danger small"></span>
                     </div>
 
-                    <div class="form-group">
-                        <label for="message">Your Message</label>
-                        <textarea id="message" rows="5" class="form-control" placeholder="How can I help you?" required></textarea>
+                    <div class="form-group mb-4">
+                        <label asp-for="MessageText" class="form-label fw-semibold">Your Message</label>
+                        <textarea asp-for="MessageText" rows="5" class="form-control rounded-3" placeholder="How can I help you?" required></textarea>
+                        <span asp-validation-for="MessageText" class="text-danger small"></span>
                     </div>
 
-                    <button type="button" class="btn-submit">
-                        Send Message <span>&rarr;</span>
+                    <button type="submit" class="btn-submit w-100 rounded-pill py-3 fw-bold d-flex align-items-center justify-content-center">
+                        <span>Send Message</span>
+                        <i class="fa-solid fa-arrow-right ms-2"></i>
                     </button>
-                    <p class="form-disclaimer mt-3 text-muted" style="font-size: 0.8rem;">* This form is currently illustrative for frontend UI purposes.</p>
+
+                    <p class="form-disclaimer mt-3 text-muted text-center" style="font-size: 0.8rem; font-style: italic;">
+                        * Your message will be securely stored and delivered to Dr. Mansi Bhatnagar.
+                    </p>
 
                 </form>
             </div>
@@ -107,3 +128,25 @@
 
     </div>
 </section>
+
+<style>
+    .bg-glass {
+        background: rgba(255, 255, 255, 0.85);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+    .form-control:focus {
+        border-color: #0d6efd;
+        box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.15);
+    }
+    .btn-submit {
+        background: #0d6efd;
+        color: white;
+        border: none;
+        transition: background 0.2s ease, transform 0.2s ease;
+    }
+    .btn-submit:hover {
+        background: #0b5ed7;
+        transform: translateY(-2px);
+    }
+</style>

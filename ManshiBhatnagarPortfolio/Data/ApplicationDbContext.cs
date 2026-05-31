@@ -1,4 +1,4 @@
-﻿using ManshiBhatnagarPortfolio.Models;
+using ManshiBhatnagarPortfolio.Models;
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,5 +11,6 @@ namespace ManshiBhatnagarPortfolio.Data
 
         public DbSet<Article> Articles { get; set; }
         public DbSet<GalleryImage> GalleryImages { get; set; }
+        public DbSet<ContactMessage> ContactMessages { get; set; }
     }
 }

@@ -1,4 +1,4 @@
-﻿using System.Diagnostics;
+using System.Diagnostics;
 using ManshiBhatnagarPortfolio.Data;
 using ManshiBhatnagarPortfolio.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -75,9 +75,24 @@ namespace ManshiBhatnagarPortfolio.Controllers
 
             return View(vm);
         }
+        [HttpGet]
         public IActionResult Contact()
         {
             return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Contact(ContactMessage model)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.ContactMessages.Add(model);
+                await _context.SaveChangesAsync();
+                TempData["ContactSuccess"] = "Thank you! Your message has been sent successfully.";
+                return RedirectToAction("Contact");
+            }
+
+            return View(model);
         }
         public IActionResult BlogDetail(int id)
         {
