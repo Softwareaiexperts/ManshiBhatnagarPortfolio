@@ -1,0 +1,132 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit About Page";
+    var s = (Dictionary<string, string>)ViewBag.Sections;
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form asp-action="SaveAbout" method="post" enctype="multipart/form-data">
+
+    <!-- Hero Section -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-star"></i> Hero Section</h5>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label-admin">Hero Tagline</label>
+                <input type="text" name="about_hero_tagline" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_hero_tagline")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label-admin">Hero Name</label>
+                <input type="text" name="about_hero_name" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_hero_name")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label-admin">Hero Subtitle</label>
+                <input type="text" name="about_hero_subtitle" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_hero_subtitle")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label-admin">Hero Image</label>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="@s.GetValueOrDefault("about_hero_image")" class="img-preview-admin" alt="Hero" />
+                    <input type="file" name="about_hero_image_file" class="form-control form-control-admin" accept="image/*" />
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Introduction Section -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-user"></i> Introduction / About Section</h5>
+        <div class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label-admin">Introduction Heading</label>
+                <input type="text" name="about_intro_heading" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_intro_heading")" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label-admin">Introduction Image</label>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="@s.GetValueOrDefault("about_intro_image")" class="img-preview-admin" alt="Intro" />
+                    <input type="file" name="about_intro_image_file" class="form-control form-control-admin" accept="image/*" />
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label-admin">Introduction Text (Rich Text)</label>
+                <textarea name="about_intro_text" id="introEditor" class="form-control">@s.GetValueOrDefault("about_intro_text")</textarea>
+            </div>
+            <div class="col-md-3">
+                <label class="form-label-admin">Stat Number</label>
+                <input type="text" name="about_stat_number" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_stat_number")" />
+            </div>
+            <div class="col-md-5">
+                <label class="form-label-admin">Stat Label</label>
+                <input type="text" name="about_stat_label" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_stat_label")" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Mission Section -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-bullseye"></i> Mission Section</h5>
+        <div class="row g-3 mb-4">
+            <div class="col-md-6">
+                <label class="form-label-admin">Mission Heading</label>
+                <input type="text" name="about_mission_heading" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_mission_heading")" />
+            </div>
+            <div class="col-md-6">
+                <label class="form-label-admin">Mission Subtitle</label>
+                <input type="text" name="about_mission_subtitle" class="form-control form-control-admin" value="@s.GetValueOrDefault("about_mission_subtitle")" />
+            </div>
+        </div>
+
+        @for (int i = 1; i <= 3; i++)
+        {
+            <div class="p-3 mb-3 rounded-3" style="background: #f8f9fb; border: 1px solid #e8ecf0;">
+                <h6 class="fw-bold mb-3" style="color: #6c5ce7;"><i class="fa-solid fa-layer-group me-1"></i> Mission Card @i</h6>
+                <div class="row g-3">
+                    <div class="col-md-4">
+                        <label class="form-label-admin">Title</label>
+                        <input type="text" name="about_mission_@(i)_title" class="form-control form-control-admin" value="@s.GetValueOrDefault($"about_mission_{i}_title")" />
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label-admin">Description</label>
+                        <textarea name="about_mission_@(i)_text" class="form-control form-control-admin" rows="2">@s.GetValueOrDefault($"about_mission_{i}_text")</textarea>
+                    </div>
+                    <div class="col-md-6">
+                        <label class="form-label-admin">Image</label>
+                        <div class="d-flex align-items-center gap-3">
+                            <img src="@s.GetValueOrDefault($"about_mission_{i}_image")" class="img-preview-admin" alt="Mission @i" />
+                            <input type="file" name="about_mission_@(i)_image_file" class="form-control form-control-admin" accept="image/*" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <div class="text-end mb-4">
+        <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+        <button type="submit" class="btn-save-page"><i class="fa-solid fa-floppy-disk me-2"></i>Save About Page</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#introEditor').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['view', ['codeview']]
+                ]
+            });
+        });
+    </script>
+}

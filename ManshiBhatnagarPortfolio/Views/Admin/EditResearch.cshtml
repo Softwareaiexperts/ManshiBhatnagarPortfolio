@@ -1,0 +1,76 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Research Page";
+    var s = (Dictionary<string, string>)ViewBag.Sections;
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form asp-action="SaveResearch" method="post" enctype="multipart/form-data">
+
+    <!-- Hero Section -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-flask"></i> Research Hero</h5>
+        <div class="row g-3">
+            <div class="col-md-6">
+                <label class="form-label-admin">Page Title</label>
+                <input type="text" name="research_hero_title" class="form-control form-control-admin" value="@s.GetValueOrDefault("research_hero_title")" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Research Section 1 -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-brain"></i> Research Area 1</h5>
+        <div class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label-admin">Heading</label>
+                <input type="text" name="research_1_heading" class="form-control form-control-admin" value="@s.GetValueOrDefault("research_1_heading")" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label-admin">Image</label>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="@s.GetValueOrDefault("research_1_image")" class="img-preview-admin" alt="Research 1" />
+                    <input type="file" name="research_1_image_file" class="form-control form-control-admin" accept="image/*" />
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label-admin">Description</label>
+                <textarea name="research_1_text" class="form-control form-control-admin" rows="3">@s.GetValueOrDefault("research_1_text")</textarea>
+            </div>
+        </div>
+    </div>
+
+    <!-- Research Section 2 -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-bolt"></i> Research Area 2</h5>
+        <div class="row g-3">
+            <div class="col-md-8">
+                <label class="form-label-admin">Heading</label>
+                <input type="text" name="research_2_heading" class="form-control form-control-admin" value="@s.GetValueOrDefault("research_2_heading")" />
+            </div>
+            <div class="col-md-4">
+                <label class="form-label-admin">Image</label>
+                <div class="d-flex align-items-center gap-3">
+                    <img src="@s.GetValueOrDefault("research_2_image")" class="img-preview-admin" alt="Research 2" />
+                    <input type="file" name="research_2_image_file" class="form-control form-control-admin" accept="image/*" />
+                </div>
+            </div>
+            <div class="col-12">
+                <label class="form-label-admin">Description</label>
+                <textarea name="research_2_text" class="form-control form-control-admin" rows="3">@s.GetValueOrDefault("research_2_text")</textarea>
+            </div>
+        </div>
+    </div>
+
+    <div class="text-end mb-4">
+        <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+        <button type="submit" class="btn-save-page"><i class="fa-solid fa-floppy-disk me-2"></i>Save Research Page</button>
+    </div>
+</form>

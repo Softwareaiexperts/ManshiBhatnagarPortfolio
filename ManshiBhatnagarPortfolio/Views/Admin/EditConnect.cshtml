@@ -1,0 +1,71 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Connect Links";
+    var s = (Dictionary<string, string>)ViewBag.Sections;
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<div class="editor-section">
+    <h5><i class="fa-solid fa-share-nodes"></i> Social & Academic Profiles</h5>
+    <p class="text-muted small mb-4">Update the profile link URLs that display in the public site header and footer sections.</p>
+
+    <form asp-action="SaveConnect" method="post">
+        <div class="row g-4">
+            
+            <div class="col-md-6">
+                <label class="form-label-admin">LinkedIn Profile URL</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white" style="border: 1.5px solid #e2e6ea; border-right: none; border-radius: 10px 0 0 10px;">
+                        <i class="fab fa-linkedin-in text-primary fa-lg"></i>
+                    </span>
+                    <input type="url" name="connect_linkedin" class="form-control form-control-admin" style="border-left: none; border-radius: 0 10px 10px 0;" placeholder="https://linkedin.com/in/username" value="@s.GetValueOrDefault("connect_linkedin")" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Twitter / X URL</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white" style="border: 1.5px solid #e2e6ea; border-right: none; border-radius: 10px 0 0 10px;">
+                        <i class="fab fa-x-twitter text-dark fa-lg"></i>
+                    </span>
+                    <input type="url" name="connect_twitter" class="form-control form-control-admin" style="border-left: none; border-radius: 0 10px 10px 0;" placeholder="https://x.com/username" value="@s.GetValueOrDefault("connect_twitter")" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">ResearchGate Profile URL</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white" style="border: 1.5px solid #e2e6ea; border-right: none; border-radius: 10px 0 0 10px;">
+                        <i class="fab fa-researchgate text-success fa-lg"></i>
+                    </span>
+                    <input type="url" name="connect_researchgate" class="form-control form-control-admin" style="border-left: none; border-radius: 0 10px 10px 0;" placeholder="https://researchgate.net/profile/username" value="@s.GetValueOrDefault("connect_researchgate")" required />
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">GitHub Profile URL</label>
+                <div class="input-group">
+                    <span class="input-group-text bg-white" style="border: 1.5px solid #e2e6ea; border-right: none; border-radius: 10px 0 0 10px;">
+                        <i class="fab fa-github text-dark fa-lg"></i>
+                    </span>
+                    <input type="url" name="connect_github" class="form-control form-control-admin" style="border-left: none; border-radius: 0 10px 10px 0;" placeholder="https://github.com/username" value="@s.GetValueOrDefault("connect_github")" required />
+                </div>
+            </div>
+
+        </div>
+
+        <div class="text-end mt-4 pt-3 border-top">
+            <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+            <button type="submit" class="btn-save-page">
+                <i class="fa-solid fa-floppy-disk me-2"></i>Save Connect Links
+            </button>
+        </div>
+    </form>
+</div>

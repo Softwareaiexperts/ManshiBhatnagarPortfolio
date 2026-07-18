@@ -1,122 +1,65 @@
 @model GalleryImage
-
 @{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
     ViewData["Title"] = "Edit Gallery Image";
-    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-lg-8 col-md-10">
+<div class="editor-section">
+    <h5><i class="fa-solid fa-pen-to-square"></i> Image Details</h5>
+    
+    <form asp-action="EditImage" method="post" enctype="multipart/form-data">
+        <input type="hidden" asp-for="Id" />
+
+        <div class="row g-3">
             
-            <!-- Header -->
-            <div class="d-flex align-items-center justify-content-between mb-4">
-                <h2 class="h3 fw-bold mb-0 d-flex align-items-center">
-                    <i class="fa-solid fa-pen-to-square text-warning me-2"></i>
-                    <span>Edit Gallery Image</span>
-                </h2>
-                <a href="/Admin/Index" class="btn btn-outline-secondary rounded-pill px-4">
-                    <i class="fa-solid fa-arrow-left me-1"></i> Back to Dashboard
-                </a>
-            </div>
-
-            <!-- Form Card -->
-            <div class="card border-0 shadow-sm rounded-3 overflow-hidden bg-glass">
-                <div class="card-body p-4 p-md-5">
-                    
-                    <form asp-action="EditImage" method="post" enctype="multipart/form-data">
-                        <input type="hidden" asp-for="Id" />
-
-                        <!-- Current Image Display and Preview -->
-                        <div class="row mb-4 align-items-center">
-                            <div class="col-md-6 text-center mb-3 mb-md-0">
-                                <label class="form-label d-block fw-semibold text-muted small uppercase mb-2">Current Image</label>
-                                <div class="image-preview-container d-inline-block rounded-3 overflow-hidden shadow-sm">
-                                    <img src="@Model.ImageUrl" alt="Current Image" style="max-height: 180px; max-width: 100%; object-fit: contain;" />
-                                </div>
-                            </div>
-                            <div class="col-md-6 text-center">
-                                <label class="form-label d-block fw-semibold text-muted small uppercase mb-2">New Preview</label>
-                                <div class="image-preview-container d-inline-block rounded-3 overflow-hidden shadow-sm" style="background-color: #f8f9fa; min-height: 150px; min-width: 200px;">
-                                    <img id="preview" src="#" style="max-height: 180px; max-width: 100%; display: none; object-fit: contain;" />
-                                    <div id="preview-placeholder" class="d-flex flex-column align-items-center justify-content-center h-100 py-5 text-muted">
-                                        <i class="fa-regular fa-image fa-2x mb-2"></i>
-                                        <span class="small">No new file chosen</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Image File Upload Input -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Replace Image File <span class="text-muted fw-normal">(Optional)</span></label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="fa-solid fa-file-image text-muted"></i></span>
-                                <input type="file" name="file" class="form-control" onchange="previewImage(event)" accept="image/*" />
-                            </div>
-                            <div class="form-text">Leave blank to keep the current gallery image.</div>
-                        </div>
-
-                        <!-- Title Input -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Image Title</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="fa-solid fa-heading text-muted"></i></span>
-                                <input asp-for="Title" class="form-control" placeholder="Enter a descriptive title" required />
-                            </div>
-                            <span asp-validation-for="Title" class="text-danger small"></span>
-                        </div>
-
-                        <!-- Description Input -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold">Description / Caption</label>
-                            <div class="input-group">
-                                <span class="input-group-text bg-white"><i class="fa-solid fa-align-left text-muted"></i></span>
-                                <textarea asp-for="Description" class="form-control" rows="4" placeholder="Describe the seminar, bootcamp, or research activity..."></textarea>
-                            </div>
-                            <span asp-validation-for="Description" class="text-danger small"></span>
-                        </div>
-
-                        <!-- Action Buttons -->
-                        <div class="d-flex justify-content-end gap-2 pt-2 border-top">
-                            <a href="/Admin/Index" class="btn btn-light rounded-pill px-4">Cancel</a>
-                            <button type="submit" class="btn btn-warning text-dark fw-bold rounded-pill px-5">
-                                <i class="fa-solid fa-floppy-disk me-1"></i> Save Changes
-                            </button>
-                        </div>
-
-                    </form>
-
+            <div class="col-md-6 text-center">
+                <label class="form-label-admin d-block">Current Image</label>
+                <div class="image-preview-container d-inline-block rounded-3 overflow-hidden shadow-sm" style="border: 1px solid #e8ecf0; padding: 6px; background-color: #fff; max-width: 100%;">
+                    <img src="@Model.ImageUrl" alt="Current Image" style="max-height: 120px; max-width: 100%; object-fit: contain;" />
                 </div>
             </div>
 
+            <div class="col-md-6 text-center">
+                <label class="form-label-admin d-block">New Preview (Optional)</label>
+                <div class="image-preview-container d-inline-block rounded-3 overflow-hidden shadow-sm" style="background-color: #f8f9fa; border: 2px dashed #dee2e6; padding: 6px; min-height: 120px; min-width: 180px; max-width: 100%;">
+                    <img id="preview" src="#" style="max-height: 120px; max-width: 100%; display: none; object-fit: contain;" />
+                    <div id="preview-placeholder" class="d-flex flex-column align-items-center justify-content-center h-100 py-3 text-muted">
+                        <i class="fa-regular fa-image fa-2x mb-1 text-secondary-light"></i>
+                        <span class="small" style="font-size:0.75rem;">No new file selected</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label-admin">Replace Image File</label>
+                <input type="file" name="file" class="form-control form-control-admin" onchange="previewImage(event)" accept="image/*" />
+                <div class="form-text">Leave blank to keep the current image.</div>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label-admin">Image Title</label>
+                <input asp-for="Title" class="form-control form-control-admin" placeholder="Enter image title" required />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label-admin">Description / Caption</label>
+                <textarea asp-for="Description" class="form-control form-control-admin" rows="4" placeholder="Describe the seminar, bootcamp, or research activity..."></textarea>
+                <span asp-validation-for="Description" class="text-danger small"></span>
+            </div>
+
         </div>
-    </div>
+
+        <div class="text-end mt-4 pt-3 border-top">
+            <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+            <button type="submit" class="btn-save-page">
+                <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+            </button>
+        </div>
+    </form>
 </div>
 
-<style>
-    .bg-glass {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .image-preview-container {
-        border: 2px dashed #dee2e6;
-        padding: 8px;
-        background-color: #fff;
-        max-width: 100%;
-        transition: border-color 0.2s ease;
-    }
-    .input-group-text {
-        border-right: none;
-    }
-    .form-control:focus + .input-group-text, .form-control:focus {
-        border-color: #ffc107;
-        box-shadow: 0 0 0 0.25rem rgba(255, 193, 7, 0.25);
-    }
-</style>
-
-<!-- 🔥 Image Preview Script -->
+<!-- Image Preview Script -->
 <script>
     function previewImage(event) {
         var input = event.target;

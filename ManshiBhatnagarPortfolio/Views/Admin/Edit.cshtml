@@ -1,75 +1,84 @@
-﻿@model Article
+@model Article
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit Article";
 }
 
-<h2 class="mb-4">✏️ Edit Article</h2>
-
-<div class="card p-4">
-
+<div class="editor-section">
+    <h5><i class="fa-solid fa-pen-to-square"></i> Article Details</h5>
+    
     <form asp-controller="Admin" asp-action="Edit" method="post" enctype="multipart/form-data">
-
         <input type="hidden" asp-for="Id" />
         <input type="hidden" asp-for="CreatedDate" />
-
-        <div class="mb-3">
-            <label>Title</label>
-            <input asp-for="Title" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label>Author</label>
-            <input asp-for="Author" class="form-control" />
-        </div>
-
-        <div class="mb-3">
-            <label>Current Image</label><br />
-
-            @if (!string.IsNullOrEmpty(Model.ImageUrl))
-            {
-                <img src="@Model.ImageUrl" alt="Article Image"
-                     style="max-width:200px; border-radius:8px; margin-bottom:10px;" />
-            }
-            else
-            {
-                <p>No image uploaded</p>
-            }
-        </div>
-
-        <div class="mb-3">
-            <label>Change Image</label>
-            <input type="file" name="imageFile" class="form-control" />
-        </div>
-
-        <!-- keep old image -->
         <input type="hidden" asp-for="ImageUrl" />
 
-        <div class="mb-3">
-            <label>Category</label>
-            <input asp-for="Category" class="form-control" />
+        <div class="row g-3">
+            
+            <div class="col-12">
+                <label class="form-label-admin">Title</label>
+                <input asp-for="Title" class="form-control form-control-admin" placeholder="Enter article title" required />
+                <span asp-validation-for="Title" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Author</label>
+                <input asp-for="Author" class="form-control form-control-admin" placeholder="e.g. Dr. Mansi Bhatnagar" required />
+                <span asp-validation-for="Author" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Category</label>
+                <input asp-for="Category" class="form-control form-control-admin" placeholder="e.g. Computer Vision, Deep Learning" required />
+                <span asp-validation-for="Category" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Read Time (minutes)</label>
+                <input asp-for="ReadTime" type="number" class="form-control form-control-admin" placeholder="e.g. 5" required />
+                <span asp-validation-for="ReadTime" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Change Image</label>
+                <div class="d-flex align-items-center gap-3">
+                    @if (!string.IsNullOrEmpty(Model.ImageUrl))
+                    {
+                        <img src="@Model.ImageUrl" class="img-preview-admin" alt="Current Image" />
+                    }
+                    <input type="file" name="imageFile" class="form-control form-control-admin" accept="image/*" />
+                </div>
+            </div>
+
+            <div class="col-12">
+                <label class="form-label-admin">Content</label>
+                <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger small"></span>
+            </div>
+
         </div>
 
-        <div class="mb-3">
-            <label>Read Time</label>
-            <input asp-for="ReadTime" class="form-control" />
+        <div class="text-end mt-4 pt-3 border-top">
+            <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+            <button type="submit" class="btn-save-page">
+                <i class="fa-solid fa-floppy-disk me-2"></i>Save Changes
+            </button>
         </div>
-
-        <div class="mb-3">
-            <label>Content</label>
-            <textarea asp-for="Content" id="editor" class="form-control"></textarea>
-        </div>
-
-        <button class="btn btn-primary">Update</button>
-
     </form>
-
 </div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $('#editor').summernote({
-                height: 300
+                height: 350,
+                toolbar: [
+                    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture', 'video', 'table']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
             });
         });
     </script>

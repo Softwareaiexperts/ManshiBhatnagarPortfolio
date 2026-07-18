@@ -1,7 +1,11 @@
-﻿<link href="~/css/researchpage.css" rel="stylesheet" />
+@{
+    ViewData["Title"] = "Research";
+    var s = (Dictionary<string, string>)ViewBag.Sections;
+}
+<link href="~/css/researchpage.css" rel="stylesheet" />
 <section class="hero-section">
     <div class="hero-container">
-        <h1 class="hero-title">Research</h1>
+        <h1 class="hero-title">@s.GetValueOrDefault("research_hero_title", "Research")</h1>
     </div>
     <!-- SVG Wavy Divider -->
     <div class="custom-shape-divider-bottom">
@@ -14,14 +18,13 @@
 <section class="research-content">
     <div class="container">
         <div class="image-column">
-            <!-- Updated to match the rounded-rectangle style in your image -->
             <div class="image-wrapper">
-                <img src="~/staticimage/hero_section_img.jpg" alt="Microplastic pollution">
+                <img src="@s.GetValueOrDefault("research_1_image", "/staticimage/hero_section_img.jpg")" alt="Research Area 1">
             </div>
         </div>
         <div class="text-column">
-            <h2>Deep Learning & Smart Grid Optimization</h2>
-            <p>I believe intelligent systems can offer effective solutions to our energy crises. My research explores how deep learning architectures can accurately model complex networks, ultimately improving short-term electric load forecasting.</p>
+            <h2>@s.GetValueOrDefault("research_1_heading", "Deep Learning & Smart Grid Optimization")</h2>
+            <p>@s.GetValueOrDefault("research_1_text", "")</p>
             <a href="#" class="btn-learn">Learn More</a>
         </div>
     </div>
@@ -30,15 +33,14 @@
 <section class="research-content secondary-bg">
     <div class="container reverse">
         <div class="text-column">
-            <h2>Integrating Renewable Energy into Microgrids</h2>
-            <p>By leveraging advanced models like Temporal Convolutional Networks (TCN) paired with meta-heuristic algorithms (ACO, BSA), our team achieves highly accurate power forecasting, essential for integrating renewable energy.</p>
+            <h2>@s.GetValueOrDefault("research_2_heading", "Integrating Renewable Energy into Microgrids")</h2>
+            <p>@s.GetValueOrDefault("research_2_text", "")</p>
             <a href="#" class="btn-learn">Learn More</a>
         </div>
         <div class="image-column">
             <div class="image-wrapper">
-                <img src="~/staticimage/hero_section_img.jpg" alt="Solar reflective ceramic tiles">
+                <img src="@s.GetValueOrDefault("research_2_image", "/staticimage/hero_section_img.jpg")" alt="Research Area 2">
             </div>
         </div>
     </div>
 </section>
-

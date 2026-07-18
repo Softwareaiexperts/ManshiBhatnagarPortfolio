@@ -15,6 +15,13 @@ namespace ManshiBhatnagarPortfolio.Controllers
             _context = context;
         }
 
+        private Dictionary<string, string> GetPageSections(string pageName)
+        {
+            return _context.PageSections
+                .Where(s => s.PageName == pageName)
+                .ToDictionary(s => s.SectionKey, s => s.Content);
+        }
+
         public IActionResult Index()
         {
             var articles = _context.Articles
@@ -22,14 +29,17 @@ namespace ManshiBhatnagarPortfolio.Controllers
                              .Take(3)
                              .ToList();
 
+            ViewBag.Sections = GetPageSections("About");
             return View(articles);
         }
         public IActionResult CV()
         {
+            ViewBag.Sections = GetPageSections("CV");
             return View();
         }
         public IActionResult Research()
         {
+            ViewBag.Sections = GetPageSections("Research");
             return View();
         }
         public IActionResult Gallery()

@@ -1,0 +1,144 @@
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Edit CV Page";
+    var s = (Dictionary<string, string>)ViewBag.Sections;
+}
+
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+    </div>
+}
+
+<form asp-action="SaveCV" method="post">
+
+    <!-- Hero Section -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-graduation-cap"></i> CV Hero Section</h5>
+        <div class="row g-3">
+            <div class="col-md-4">
+                <label class="form-label-admin">Page Title</label>
+                <input type="text" name="cv_hero_title" class="form-control form-control-admin" value="@s.GetValueOrDefault("cv_hero_title")" />
+            </div>
+            <div class="col-md-5">
+                <label class="form-label-admin">Subtitle</label>
+                <input type="text" name="cv_hero_subtitle" class="form-control form-control-admin" value="@s.GetValueOrDefault("cv_hero_subtitle")" />
+            </div>
+            <div class="col-md-3">
+                <label class="form-label-admin">CV Download URL</label>
+                <input type="text" name="cv_download_url" class="form-control form-control-admin" value="@s.GetValueOrDefault("cv_download_url")" />
+            </div>
+        </div>
+    </div>
+
+    <!-- Education -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-book"></i> Education</h5>
+        @for (int i = 1; i <= 2; i++)
+        {
+            <div class="p-3 mb-3 rounded-3" style="background: #f8f9fb; border: 1px solid #e8ecf0;">
+                <h6 class="fw-bold mb-3" style="color: #6c5ce7;">Education Entry @i</h6>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label-admin">Date Range</label>
+                        <input type="text" name="cv_edu_@(i)_date" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_edu_{i}_date")" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label-admin">Degree / Title</label>
+                        <input type="text" name="cv_edu_@(i)_title" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_edu_{i}_title")" />
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label-admin">Institution</label>
+                        <input type="text" name="cv_edu_@(i)_institution" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_edu_{i}_institution")" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label-admin">Description</label>
+                        <textarea name="cv_edu_@(i)_desc" class="form-control form-control-admin" rows="2">@s.GetValueOrDefault($"cv_edu_{i}_desc")</textarea>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Experience -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-briefcase"></i> Experience</h5>
+        @for (int i = 1; i <= 2; i++)
+        {
+            <div class="p-3 mb-3 rounded-3" style="background: #f8f9fb; border: 1px solid #e8ecf0;">
+                <h6 class="fw-bold mb-3" style="color: #6c5ce7;">Experience Entry @i</h6>
+                <div class="row g-3">
+                    <div class="col-md-3">
+                        <label class="form-label-admin">Date Range</label>
+                        <input type="text" name="cv_exp_@(i)_date" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_exp_{i}_date")" />
+                    </div>
+                    <div class="col-md-4">
+                        <label class="form-label-admin">Job Title</label>
+                        <input type="text" name="cv_exp_@(i)_title" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_exp_{i}_title")" />
+                    </div>
+                    <div class="col-md-5">
+                        <label class="form-label-admin">Company / Organization</label>
+                        <input type="text" name="cv_exp_@(i)_company" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_exp_{i}_company")" />
+                    </div>
+                    <div class="col-12">
+                        <label class="form-label-admin">Description</label>
+                        <textarea name="cv_exp_@(i)_desc" class="form-control form-control-admin" rows="2">@s.GetValueOrDefault($"cv_exp_{i}_desc")</textarea>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+
+    <!-- Skills -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-chart-bar"></i> Core Competencies (Skills)</h5>
+        <div class="row g-3">
+            @for (int i = 1; i <= 4; i++)
+            {
+                <div class="col-md-6">
+                    <div class="p-3 rounded-3" style="background: #f8f9fb; border: 1px solid #e8ecf0;">
+                        <div class="row g-2">
+                            <div class="col-8">
+                                <label class="form-label-admin">Skill @i Name</label>
+                                <input type="text" name="cv_skill_@(i)_name" class="form-control form-control-admin" value="@s.GetValueOrDefault($"cv_skill_{i}_name")" />
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label-admin">Percent %</label>
+                                <input type="number" name="cv_skill_@(i)_percent" class="form-control form-control-admin" min="0" max="100" value="@s.GetValueOrDefault($"cv_skill_{i}_percent")" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+
+    <!-- Publications -->
+    <div class="editor-section">
+        <h5><i class="fa-solid fa-award"></i> Recent Publications</h5>
+        <textarea name="cv_publications_html" id="pubEditor" class="form-control">@s.GetValueOrDefault("cv_publications_html")</textarea>
+    </div>
+
+    <div class="text-end mb-4">
+        <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+        <button type="submit" class="btn-save-page"><i class="fa-solid fa-floppy-disk me-2"></i>Save CV Page</button>
+    </div>
+</form>
+
+@section Scripts {
+    <script>
+        $(document).ready(function() {
+            $('#pubEditor').summernote({
+                height: 200,
+                toolbar: [
+                    ['style', ['bold', 'italic', 'underline']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link']],
+                    ['view', ['codeview']]
+                ]
+            });
+        });
+    </script>
+}

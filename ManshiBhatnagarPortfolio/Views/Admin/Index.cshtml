@@ -1,425 +1,325 @@
 @model ManshiBhatnagarPortfolio.Models.AdminDashboardViewModel
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    ViewData["Title"] = "Admin Dashboard";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Dashboard";
 }
 
-<div class="container-fluid py-4">
-    
-    <!-- Header -->
-    <div class="d-flex align-items-center justify-content-between mb-4">
-        <h2 class="h3 fw-bold mb-0 d-flex align-items-center">
-            <i class="fa-solid fa-gauge-high text-primary me-2"></i>
-            <span>Admin Dashboard</span>
-        </h2>
+<!-- Success Message -->
+@if (TempData["Success"] != null)
+{
+    <div class="alert alert-success alert-dismissible fade show rounded-3 border-0 shadow-sm" role="alert">
+        <i class="fa-solid fa-circle-check me-2"></i> @TempData["Success"]
+        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
     </div>
+}
 
-    <!-- 🔹 DYNAMIC MESSAGES NOTIFICATION BANNER -->
-    @if (Model.UnreadMessagesCount > 0)
-    {
-        <div class="alert alert-warning border-0 shadow-sm rounded-3 p-4 mb-4 d-flex align-items-start position-relative overflow-hidden" style="background: linear-gradient(135deg, #fffcf0 0%, #fff3cd 100%); border-left: 5px solid #ffc107 !important;">
-            <div class="position-absolute top-0 end-0 p-3 opacity-10" style="font-size: 5rem; pointer-events: none;">
-                <i class="fa-solid fa-bell"></i>
-            </div>
-            
-            <div class="bg-warning text-dark rounded-circle p-3 d-flex align-items-center justify-content-center me-3 shadow-sm bell-pulse" style="width: 54px; height: 54px; min-width: 54px;">
-                <i class="fa-solid fa-bell fa-xl text-dark"></i>
-            </div>
-            
-            <div class="flex-grow-1">
-                <h5 class="fw-bold text-dark mb-1">New Message Notifications</h5>
-                <p class="text-dark-50 mb-0 small">
-                    You have received <strong>@Model.UnreadMessagesCount</strong> new contact message@(Model.UnreadMessagesCount > 1 ? "s" : "")! Check what collaborators, seminars, or students have sent you.
-                </p>
-                <button class="btn btn-warning btn-sm text-dark fw-bold mt-2 rounded-pill px-4 shadow-sm" onclick="document.getElementById('messages-tab').click();">
-                    <i class="fa-solid fa-envelope-open-text me-1"></i> Open Inbox
-                </button>
-            </div>
+<!-- Notification Banner -->
+@if (Model.UnreadMessagesCount > 0)
+{
+    <div class="admin-notification">
+        <div class="notif-icon">
+            <i class="fa-solid fa-bell"></i>
         </div>
-    }
-
-    <!-- 🔹 ADMIN QUICK ACTIONS -->
-    <div class="row g-4 mb-4">
-        <!-- Add Blog Card -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden bg-glass hover-card">
-                <div class="card-body p-4 text-center">
-                    <div class="icon-box bg-success-light text-success mb-3 mx-auto d-flex align-items-center justify-content-center rounded-circle" style="width: 60px; height: 60px;">
-                        <i class="fa-solid fa-pen-nib fa-2x"></i>
-                    </div>
-                    <h4 class="fw-bold mb-2">Create Blog Post</h4>
-                    <p class="text-muted mb-4 small">Draft, format and publish a brand new article or research update.</p>
-                    <a href="/Admin/Create" class="btn btn-success px-4 rounded-pill">
-                        <i class="fa-solid fa-plus me-1"></i> Add Blog
-                    </a>
-                </div>
-            </div>
+        <div class="flex-grow-1">
+            <strong>@Model.UnreadMessagesCount new message@(Model.UnreadMessagesCount > 1 ? "s" : "")</strong>
+            <span class="text-muted ms-1">— Check what collaborators and students have sent you.</span>
         </div>
+        <button class="btn btn-sm btn-warning fw-bold rounded-pill px-3" onclick="document.getElementById('messages-tab').click();">
+            <i class="fa-solid fa-envelope-open-text me-1"></i> Open
+        </button>
+    </div>
+}
 
-        <!-- Add Gallery Image Card -->
-        <div class="col-md-6 col-lg-4">
-            <div class="card h-100 shadow-sm border-0 rounded-3 overflow-hidden bg-glass hover-card">
-                <div class="card-body p-4 text-center">
-                    <div class="icon-box bg-info-light text-info mb-3 mx-auto d-flex align-items-center justify-content-center rounded-circle" style="width: 60px; height: 60px;">
-                        <i class="fa-solid fa-images fa-2x"></i>
-                    </div>
-                    <h4 class="fw-bold mb-2">Upload Gallery Image</h4>
-                    <p class="text-muted mb-4 small">Add seminars, bootcamps, lab milestones, and event photos to the visual journey.</p>
-                    <a href="/Admin/AddImage" class="btn btn-info text-white px-4 rounded-pill">
-                        <i class="fa-solid fa-upload me-1"></i> Upload Image
-                    </a>
-                </div>
+<!-- Stat Cards -->
+<div class="row g-4 mb-4">
+    <div class="col-md-6 col-lg-3">
+        <div class="stat-card purple">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-icon purple"><i class="fa-solid fa-newspaper"></i></div>
             </div>
+            <div class="stat-number">@Model.Articles.Count</div>
+            <div class="stat-label">Blog Articles</div>
         </div>
     </div>
-
-    <!-- 🔹 NAVIGATION TABS -->
-    <div class="card shadow-sm border-0 rounded-3">
-        <div class="card-header bg-white border-bottom-0 pt-3">
-            <ul class="nav nav-pills card-header-pills" id="adminTabs" role="tablist">
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link active fw-bold px-4 py-2 me-2" id="blogs-tab" data-bs-toggle="tab" data-bs-target="#blogs" type="button" role="tab" aria-controls="blogs" aria-selected="true">
-                        <i class="fa-regular fa-newspaper me-1"></i> Blogs & Articles (@Model.Articles.Count)
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-bold px-4 py-2 me-2" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery" type="button" role="tab" aria-controls="gallery" aria-selected="false">
-                        <i class="fa-regular fa-images me-1"></i> Gallery Images (@Model.GalleryImages.Count)
-                    </button>
-                </li>
-                <li class="nav-item" role="presentation">
-                    <button class="nav-link fw-bold px-4 py-2 position-relative" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab" aria-controls="messages" aria-selected="false">
-                        <i class="fa-regular fa-envelope me-1"></i> Contact Messages (@Model.ContactMessages.Count)
-                        @if (Model.UnreadMessagesCount > 0)
-                        {
-                            <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger border border-light" style="font-size: 0.7rem; padding: 0.35em 0.6em;">
-                                @Model.UnreadMessagesCount
-                            </span>
-                        }
-                    </button>
-                </li>
-            </ul>
-        </div>
-
-        <div class="card-body p-0">
-            <!-- 🔹 TAB CONTENT -->
-            <div class="tab-content" id="adminTabsContent">
-                
-                <!-- 📄 BLOGS TAB -->
-                <div class="tab-pane fade show active" id="blogs" role="tabpanel" aria-labelledby="blogs-tab">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light border-top-0">
-                                <tr>
-                                    <th class="ps-4">Image</th>
-                                    <th>Title</th>
-                                    <th>Category</th>
-                                    <th>Date</th>
-                                    <th class="pe-4 text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.Articles == null || !Model.Articles.Any())
-                                {
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted p-5">
-                                            <i class="fa-regular fa-file-lines fa-3x mb-3 text-secondary"></i>
-                                            <h5>No articles available</h5>
-                                            <a href="/Admin/Create" class="btn btn-sm btn-success mt-2">Create First Blog</a>
-                                        </td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    @foreach (var item in Model.Articles)
-                                    {
-                                        <tr>
-                                            <td class="ps-4">
-                                                <div class="rounded-3 shadow-sm overflow-hidden" style="width: 60px; height: 45px;">
-                                                    <img src="@item.ImageUrl" class="w-100 h-100 object-fit-cover" style="object-fit: cover;" alt="@item.Title" />
-                                                </div>
-                                            </td>
-                                            <td class="fw-semibold">@item.Title</td>
-                                            <td>
-                                                <span class="badge bg-secondary-light text-secondary rounded-pill px-3 py-2 text-capitalize">@item.Category</span>
-                                            </td>
-                                            <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
-                                            <td class="pe-4 text-end">
-                                                <a href="/Admin/Edit/@item.Id" class="btn btn-sm btn-outline-warning me-1 px-3 rounded-pill">
-                                                    <i class="fa-solid fa-pen me-1"></i> Edit
-                                                </a>
-                                                <a href="/Admin/DeleteArtical/@item.Id" class="btn btn-sm btn-outline-danger px-3 rounded-pill" onclick="return confirm('Are you sure you want to delete this article?');">
-                                                    <i class="fa-solid fa-trash me-1"></i> Delete
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 🖼️ GALLERY IMAGES TAB -->
-                <div class="tab-pane fade" id="gallery" role="tabpanel" aria-labelledby="gallery-tab">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light border-top-0">
-                                <tr>
-                                    <th class="ps-4">Image</th>
-                                    <th>Title</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                    <th class="pe-4 text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.GalleryImages == null || !Model.GalleryImages.Any())
-                                {
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted p-5">
-                                            <i class="fa-regular fa-image fa-3x mb-3 text-secondary"></i>
-                                            <h5>No gallery images uploaded yet</h5>
-                                            <a href="/Admin/AddImage" class="btn btn-sm btn-info text-white mt-2">Upload First Image</a>
-                                        </td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    @foreach (var item in Model.GalleryImages)
-                                    {
-                                        <tr>
-                                            <td class="ps-4">
-                                                <div class="rounded-3 shadow-sm overflow-hidden" style="width: 75px; height: 50px;">
-                                                    <img src="@item.ImageUrl" class="w-100 h-100 object-fit-cover" style="object-fit: cover;" alt="@item.Title" />
-                                                </div>
-                                            </td>
-                                            <td class="fw-semibold">@item.Title</td>
-                                            <td class="text-muted text-wrap" style="max-width: 350px;">
-                                                @(string.IsNullOrEmpty(item.Description) ? "No description" : (item.Description.Length > 85 ? item.Description.Substring(0, 85) + "..." : item.Description))
-                                            </td>
-                                            <td>@item.CreatedDate.ToString("dd MMM yyyy")</td>
-                                            <td class="pe-4 text-end">
-                                                <a href="/Admin/EditImage/@item.Id" class="btn btn-sm btn-outline-warning me-1 px-3 rounded-pill">
-                                                    <i class="fa-solid fa-pen me-1"></i> Edit
-                                                </a>
-                                                <a href="/Admin/DeleteImage/@item.Id" class="btn btn-sm btn-outline-danger px-3 rounded-pill" onclick="return confirm('Are you sure you want to delete this gallery image?');">
-                                                    <i class="fa-solid fa-trash me-1"></i> Delete
-                                                </a>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
-                <!-- 📧 CONTACT MESSAGES TAB -->
-                <div class="tab-pane fade" id="messages" role="tabpanel" aria-labelledby="messages-tab">
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead class="table-light border-top-0">
-                                <tr>
-                                    <th class="ps-4" style="width: 40px;"></th>
-                                    <th>Sender</th>
-                                    <th>Subject & Brief</th>
-                                    <th>Date Received</th>
-                                    <th class="pe-4 text-end">Actions</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @if (Model.ContactMessages == null || !Model.ContactMessages.Any())
-                                {
-                                    <tr>
-                                        <td colspan="5" class="text-center text-muted p-5">
-                                            <i class="fa-regular fa-envelope-open fa-3x mb-3 text-secondary"></i>
-                                            <h5>Your inbox is empty</h5>
-                                            <p class="text-muted small">Messages sent through your contact page will appear here.</p>
-                                        </td>
-                                    </tr>
-                                }
-                                else
-                                {
-                                    @foreach (var item in Model.ContactMessages)
-                                    {
-                                        <!-- Row triggers collapse toggle on click (excluding button cell) -->
-                                        <tr class="message-row @(item.IsRead ? "text-muted" : "fw-bold bg-unread")" 
-                                            style="cursor: pointer; transition: background-color 0.2s;"
-                                            data-bs-toggle="collapse" 
-                                            data-bs-target="#msg-@item.Id" 
-                                            aria-expanded="false" 
-                                            aria-controls="msg-@item.Id">
-                                            
-                                            <td class="ps-4 text-center">
-                                                @if (item.IsRead)
-                                                {
-                                                    <i class="fa-regular fa-envelope-open text-muted"></i>
-                                                }
-                                                else
-                                                {
-                                                    <i class="fa-solid fa-envelope text-primary animate-ring"></i>
-                                                }
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column">
-                                                    <span>@item.FirstName @item.LastName</span>
-                                                    <span class="small text-muted fw-normal">@item.Email</span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <div class="d-flex flex-column text-wrap" style="max-width: 450px;">
-                                                    <span class="subject-title">@item.Subject</span>
-                                                    <span class="small text-muted fw-normal text-truncate">
-                                                        @(item.MessageText.Length > 90 ? item.MessageText.Substring(0, 90) + "..." : item.MessageText)
-                                                    </span>
-                                                </div>
-                                            </td>
-                                            <td>
-                                                <span class="small">@item.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")</span>
-                                            </td>
-                                            <td class="pe-4 text-end" onclick="event.stopPropagation();">
-                                                <div class="d-flex justify-content-end gap-1">
-                                                    @if (!item.IsRead)
-                                                    {
-                                                        <form asp-action="MarkMessageRead" asp-route-id="@item.Id" method="post" class="d-inline">
-                                                            <button type="submit" class="btn btn-sm btn-outline-success rounded-pill px-3" title="Mark as Read">
-                                                                <i class="fa-solid fa-check"></i>
-                                                            </button>
-                                                        </form>
-                                                    }
-                                                    <form asp-action="DeleteMessage" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this message?');">
-                                                        <button type="submit" class="btn btn-sm btn-outline-danger rounded-pill px-3" title="Delete Message">
-                                                            <i class="fa-solid fa-trash"></i>
-                                                        </button>
-                                                    </form>
-                                                </div>
-                                            </td>
-                                        </tr>
-
-                                        <!-- Collapsible details row -->
-                                        <tr class="collapse-row border-0">
-                                            <td colspan="5" class="p-0 border-0">
-                                                <div class="collapse" id="msg-@item.Id">
-                                                    <div class="p-4 border rounded-3 m-3 bg-light position-relative shadow-sm" style="border-left: 4px solid #0d6efd !important;">
-                                                        <div class="d-flex justify-content-between align-items-center mb-3">
-                                                            <div>
-                                                                <h6 class="fw-bold text-dark mb-0">@item.FirstName @item.LastName</h6>
-                                                                <a href="mailto:@item.Email" class="small text-decoration-none"><i class="fa-regular fa-paper-plane me-1"></i> @item.Email</a>
-                                                            </div>
-                                                            <div class="text-end">
-                                                                <span class="badge bg-primary px-3 py-2 rounded-pill small">@item.Subject</span>
-                                                            </div>
-                                                        </div>
-                                                        <hr class="text-muted opacity-25" />
-                                                        <p class="text-dark bg-white p-3 rounded border shadow-inner small mb-3" style="white-space: pre-wrap; line-height: 1.7; font-family: inherit;">@item.MessageText</p>
-                                                        
-                                                        <div class="d-flex justify-content-end gap-2 align-items-center">
-                                                            <span class="text-muted small me-auto"><i class="fa-regular fa-clock me-1"></i> Received @item.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")</span>
-                                                            @if (!item.IsRead)
-                                                            {
-                                                                <form asp-action="MarkMessageRead" asp-route-id="@item.Id" method="post" class="d-inline">
-                                                                    <button type="submit" class="btn btn-sm btn-success rounded-pill px-4 shadow-sm">
-                                                                        <i class="fa-solid fa-check me-1"></i> Mark Read
-                                                                    </button>
-                                                                </form>
-                                                            }
-                                                            <form asp-action="DeleteMessage" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Are you sure you want to delete this message?');">
-                                                                <button type="submit" class="btn btn-sm btn-danger rounded-pill px-4 shadow-sm">
-                                                                    <i class="fa-solid fa-trash me-1"></i> Delete
-                                                                </button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                    }
-                                }
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
-
+    <div class="col-md-6 col-lg-3">
+        <div class="stat-card teal">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-icon teal"><i class="fa-solid fa-images"></i></div>
             </div>
+            <div class="stat-number">@Model.GalleryImages.Count</div>
+            <div class="stat-label">Gallery Images</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stat-card rose">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-icon rose"><i class="fa-solid fa-envelope"></i></div>
+            </div>
+            <div class="stat-number">@Model.ContactMessages.Count</div>
+            <div class="stat-label">Total Messages</div>
+        </div>
+    </div>
+    <div class="col-md-6 col-lg-3">
+        <div class="stat-card amber">
+            <div class="d-flex align-items-center justify-content-between mb-3">
+                <div class="stat-icon amber"><i class="fa-solid fa-bell"></i></div>
+            </div>
+            <div class="stat-number">@Model.UnreadMessagesCount</div>
+            <div class="stat-label">Unread Messages</div>
         </div>
     </div>
 </div>
 
-<style>
-    .bg-glass {
-        background: rgba(255, 255, 255, 0.7);
-        backdrop-filter: blur(10px);
-        border: 1px solid rgba(255, 255, 255, 0.2);
-    }
-    .hover-card {
-        transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-    .hover-card:hover {
-        transform: translateY(-5px);
-        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.08) !important;
-    }
-    .bg-success-light {
-        background-color: rgba(40, 167, 69, 0.1);
-    }
-    .bg-info-light {
-        background-color: rgba(23, 162, 184, 0.1);
-    }
-    .bg-secondary-light {
-        background-color: rgba(108, 117, 125, 0.1);
-    }
-    .nav-pills .nav-link {
-        color: #495057;
-        border-radius: 50px;
-        transition: all 0.2s ease;
-    }
-    .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
-        background-color: #0d6efd;
-        color: #fff;
-    }
-    .table > :not(caption) > * > * {
-        padding: 1.1rem 0.85rem;
-    }
-    .bg-unread {
-        background-color: rgba(13, 110, 253, 0.04) !important;
-    }
-    .message-row:hover {
-        background-color: rgba(13, 110, 253, 0.08) !important;
-    }
-    .subject-title {
-        color: #212529;
-    }
-    .bg-unread .subject-title {
-        color: #0d6efd;
-    }
-    
-    /* Active ring bell animation */
-    @@keyframes ring {
-        0% { transform: rotate(0); }
-        5% { transform: rotate(15deg); }
-        10% { transform: rotate(-15deg); }
-        15% { transform: rotate(12deg); }
-        20% { transform: rotate(-12deg); }
-        25% { transform: rotate(10deg); }
-        30% { transform: rotate(-10deg); }
-        35% { transform: rotate(8deg); }
-        40% { transform: rotate(-8deg); }
-        45% { transform: rotate(0); }
-        100% { transform: rotate(0); }
-    }
-    .animate-ring {
-        display: inline-block;
-        animation: ring 2.5s infinite;
-        transform-origin: 50% 0;
-    }
-    
-    /* Bell pulsing effect for notification banner */
-    @@keyframes pulse-warning {
-        0% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0.5); }
-        70% { box-shadow: 0 0 0 12px rgba(255, 193, 7, 0); }
-        100% { box-shadow: 0 0 0 0 rgba(255, 193, 7, 0); }
-    }
-    .bell-pulse {
-        animation: pulse-warning 2s infinite;
-    }
-</style>
+<!-- Quick Actions -->
+<div class="row g-4 mb-4">
+    <div class="col-md-4">
+        <div class="quick-action-card">
+            <div class="quick-action-icon" style="background: rgba(16, 185, 129, 0.1); color: #10b981;">
+                <i class="fa-solid fa-pen-nib"></i>
+            </div>
+            <h6 class="fw-bold mb-1">Create Blog Post</h6>
+            <p class="text-muted small mb-3">Draft and publish a new article</p>
+            <a href="/Admin/Create" class="btn btn-sm btn-success rounded-pill px-4">
+                <i class="fa-solid fa-plus me-1"></i> New Blog
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="quick-action-card">
+            <div class="quick-action-icon" style="background: rgba(8, 145, 178, 0.1); color: #0891b2;">
+                <i class="fa-solid fa-images"></i>
+            </div>
+            <h6 class="fw-bold mb-1">Upload Gallery Image</h6>
+            <p class="text-muted small mb-3">Add event photos and milestones</p>
+            <a href="/Admin/AddImage" class="btn btn-sm btn-info text-white rounded-pill px-4">
+                <i class="fa-solid fa-upload me-1"></i> Upload
+            </a>
+        </div>
+    </div>
+    <div class="col-md-4">
+        <div class="quick-action-card">
+            <div class="quick-action-icon" style="background: rgba(108, 92, 231, 0.1); color: #6c5ce7;">
+                <i class="fa-solid fa-pen-to-square"></i>
+            </div>
+            <h6 class="fw-bold mb-1">Edit Pages</h6>
+            <p class="text-muted small mb-3">Update About, CV, or Research pages</p>
+            <a href="/Admin/EditAbout" class="btn btn-sm rounded-pill px-4" style="background: #6c5ce7; color: #fff;">
+                <i class="fa-solid fa-edit me-1"></i> Edit Pages
+            </a>
+        </div>
+    </div>
+</div>
+
+<!-- Tabs for Content -->
+<div class="admin-card">
+    <div class="admin-card-header">
+        <ul class="nav admin-tabs" id="adminTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="blogs-tab" data-bs-toggle="tab" data-bs-target="#blogs" type="button" role="tab">
+                    <i class="fa-regular fa-newspaper me-1"></i> Blogs (@Model.Articles.Count)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="gallery-tab" data-bs-toggle="tab" data-bs-target="#gallery" type="button" role="tab">
+                    <i class="fa-regular fa-images me-1"></i> Gallery (@Model.GalleryImages.Count)
+                </button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link position-relative" id="messages-tab" data-bs-toggle="tab" data-bs-target="#messages" type="button" role="tab">
+                    <i class="fa-regular fa-envelope me-1"></i> Messages (@Model.ContactMessages.Count)
+                    @if (Model.UnreadMessagesCount > 0)
+                    {
+                        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" style="font-size: 0.65rem;">
+                            @Model.UnreadMessagesCount
+                        </span>
+                    }
+                </button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="tab-content" id="adminTabsContent">
+        <!-- Blogs Tab -->
+        <div class="tab-pane fade show active" id="blogs" role="tabpanel">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="padding-left: 24px;">Image</th>
+                        <th>Title</th>
+                        <th>Category</th>
+                        <th>Date</th>
+                        <th style="text-align: right; padding-right: 24px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.Articles.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted p-5">
+                                <i class="fa-regular fa-file-lines fa-3x mb-3 text-secondary"></i>
+                                <h6>No articles yet</h6>
+                                <a href="/Admin/Create" class="btn btn-sm btn-success mt-2 rounded-pill px-3">Create First Blog</a>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.Articles)
+                        {
+                            <tr>
+                                <td style="padding-left: 24px;">
+                                    <div class="rounded-3 overflow-hidden" style="width: 56px; height: 40px;">
+                                        <img src="@item.ImageUrl" class="w-100 h-100" style="object-fit: cover;" alt="@item.Title" />
+                                    </div>
+                                </td>
+                                <td class="fw-semibold">@item.Title</td>
+                                <td><span class="badge rounded-pill px-3 py-2" style="background: rgba(108,92,231,0.1); color: #6c5ce7;">@item.Category</span></td>
+                                <td class="text-muted">@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                                <td style="text-align: right; padding-right: 24px;">
+                                    <a href="/Admin/Edit/@item.Id" class="btn-admin-edit me-1"><i class="fa-solid fa-pen me-1"></i>Edit</a>
+                                    <a href="/Admin/DeleteArtical/@item.Id" class="btn-admin-delete" onclick="return confirm('Delete this article?');"><i class="fa-solid fa-trash me-1"></i>Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Gallery Tab -->
+        <div class="tab-pane fade" id="gallery" role="tabpanel">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="padding-left: 24px;">Image</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Date</th>
+                        <th style="text-align: right; padding-right: 24px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.GalleryImages.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted p-5">
+                                <i class="fa-regular fa-image fa-3x mb-3 text-secondary"></i>
+                                <h6>No gallery images yet</h6>
+                                <a href="/Admin/AddImage" class="btn btn-sm btn-info text-white mt-2 rounded-pill px-3">Upload First Image</a>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.GalleryImages)
+                        {
+                            <tr>
+                                <td style="padding-left: 24px;">
+                                    <div class="rounded-3 overflow-hidden" style="width: 72px; height: 48px;">
+                                        <img src="@item.ImageUrl" class="w-100 h-100" style="object-fit: cover;" alt="@item.Title" />
+                                    </div>
+                                </td>
+                                <td class="fw-semibold">@item.Title</td>
+                                <td class="text-muted" style="max-width: 300px;">
+                                    @(string.IsNullOrEmpty(item.Description) ? "—" : (item.Description.Length > 80 ? item.Description.Substring(0, 80) + "..." : item.Description))
+                                </td>
+                                <td class="text-muted">@item.CreatedDate.ToString("dd MMM yyyy")</td>
+                                <td style="text-align: right; padding-right: 24px;">
+                                    <a href="/Admin/EditImage/@item.Id" class="btn-admin-edit me-1"><i class="fa-solid fa-pen me-1"></i>Edit</a>
+                                    <a href="/Admin/DeleteImage/@item.Id" class="btn-admin-delete" onclick="return confirm('Delete this image?');"><i class="fa-solid fa-trash me-1"></i>Delete</a>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Messages Tab -->
+        <div class="tab-pane fade" id="messages" role="tabpanel">
+            <table class="admin-table">
+                <thead>
+                    <tr>
+                        <th style="padding-left: 24px; width: 40px;"></th>
+                        <th>Sender</th>
+                        <th>Subject & Brief</th>
+                        <th>Date</th>
+                        <th style="text-align: right; padding-right: 24px;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (!Model.ContactMessages.Any())
+                    {
+                        <tr>
+                            <td colspan="5" class="text-center text-muted p-5">
+                                <i class="fa-regular fa-envelope-open fa-3x mb-3 text-secondary"></i>
+                                <h6>Inbox is empty</h6>
+                            </td>
+                        </tr>
+                    }
+                    else
+                    {
+                        @foreach (var item in Model.ContactMessages)
+                        {
+                            <tr class="@(item.IsRead ? "text-muted" : "msg-unread")"
+                                style="cursor: pointer;"
+                                data-bs-toggle="collapse"
+                                data-bs-target="#msg-@item.Id">
+                                <td style="padding-left: 24px; text-align: center;">
+                                    @if (item.IsRead)
+                                    {
+                                        <i class="fa-regular fa-envelope-open text-muted"></i>
+                                    }
+                                    else
+                                    {
+                                        <i class="fa-solid fa-envelope" style="color: #6c5ce7;"></i>
+                                    }
+                                </td>
+                                <td>
+                                    <div>@item.FirstName @item.LastName</div>
+                                    <small class="text-muted fw-normal">@item.Email</small>
+                                </td>
+                                <td style="max-width: 400px;">
+                                    <div class="fw-semibold">@item.Subject</div>
+                                    <small class="text-muted fw-normal">@(item.MessageText.Length > 80 ? item.MessageText.Substring(0, 80) + "..." : item.MessageText)</small>
+                                </td>
+                                <td><small>@item.CreatedDate.ToString("dd MMM yyyy, hh:mm tt")</small></td>
+                                <td style="text-align: right; padding-right: 24px;" onclick="event.stopPropagation();">
+                                    <div class="d-flex justify-content-end gap-1">
+                                        @if (!item.IsRead)
+                                        {
+                                            <form asp-action="MarkMessageRead" asp-route-id="@item.Id" method="post" class="d-inline">
+                                                <button type="submit" class="btn-admin-success" title="Mark as Read"><i class="fa-solid fa-check"></i></button>
+                                            </form>
+                                        }
+                                        <form asp-action="DeleteMessage" asp-route-id="@item.Id" method="post" class="d-inline" onsubmit="return confirm('Delete this message?');">
+                                            <button type="submit" class="btn-admin-delete" title="Delete"><i class="fa-solid fa-trash"></i></button>
+                                        </form>
+                                    </div>
+                                </td>
+                            </tr>
+                            <!-- Expandable message detail -->
+                            <tr class="border-0">
+                                <td colspan="5" class="p-0 border-0">
+                                    <div class="collapse" id="msg-@item.Id">
+                                        <div class="p-4 m-3 rounded-3 bg-light border" style="border-left: 4px solid #6c5ce7 !important;">
+                                            <div class="d-flex justify-content-between mb-2">
+                                                <div>
+                                                    <h6 class="fw-bold mb-0">@item.FirstName @item.LastName</h6>
+                                                    <a href="mailto:@item.Email" class="small text-decoration-none"><i class="fa-regular fa-paper-plane me-1"></i>@item.Email</a>
+                                                </div>
+                                                <span class="badge rounded-pill px-3 py-2 h-100" style="background: #6c5ce7; color: #fff;">@item.Subject</span>
+                                            </div>
+                                            <hr class="opacity-25" />
+                                            <p class="bg-white p-3 rounded border small mb-0" style="white-space: pre-wrap; line-height: 1.7;">@item.MessageText</p>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        }
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

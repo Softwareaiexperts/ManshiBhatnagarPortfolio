@@ -12,5 +12,6 @@ namespace ManshiBhatnagarPortfolio.Data
         public DbSet<Article> Articles { get; set; }
         public DbSet<GalleryImage> GalleryImages { get; set; }
         public DbSet<ContactMessage> ContactMessages { get; set; }
+        public DbSet<PageSection> PageSections { get; set; }
     }
 }

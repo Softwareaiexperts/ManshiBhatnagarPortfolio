@@ -1,0 +1,99 @@
+@{
+    var currentAction = ViewContext.RouteData.Values["Action"]?.ToString();
+    var unreadCount = ViewBag.UnreadCount ?? 0;
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] — Admin Panel</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/admin.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.css" rel="stylesheet">
+</head>
+<body class="admin-body">
+
+    <!-- Sidebar -->
+    <aside class="admin-sidebar">
+        <div class="sidebar-brand">
+            <h4>Mansi Bhatnagar</h4>
+            <small>Admin Panel</small>
+        </div>
+
+        <ul class="sidebar-nav">
+            <li class="sidebar-nav-header">Main</li>
+            <li>
+                <a href="/Admin" class="@(currentAction == "Index" ? "active" : "")">
+                    <i class="fa-solid fa-gauge-high"></i>
+                    <span>Dashboard</span>
+                </a>
+            </li>
+
+            <li class="sidebar-nav-header">Page Editors</li>
+            <li>
+                <a href="/Admin/EditAbout" class="@(currentAction == "EditAbout" ? "active" : "")">
+                    <i class="fa-solid fa-house"></i>
+                    <span>About Page</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/EditCV" class="@(currentAction == "EditCV" ? "active" : "")">
+                    <i class="fa-solid fa-file-lines"></i>
+                    <span>CV Page</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/EditResearch" class="@(currentAction == "EditResearch" ? "active" : "")">
+                    <i class="fa-solid fa-flask"></i>
+                    <span>Research Page</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/EditConnect" class="@(currentAction == "EditConnect" ? "active" : "")">
+                    <i class="fa-solid fa-share-nodes"></i>
+                    <span>Connect Links</span>
+                </a>
+            </li>
+
+            <li class="sidebar-nav-header">Content</li>
+            <li>
+                <a href="/Admin/Create" class="@(currentAction == "Create" ? "active" : "")">
+                    <i class="fa-solid fa-pen-nib"></i>
+                    <span>New Blog Post</span>
+                </a>
+            </li>
+            <li>
+                <a href="/Admin/AddImage" class="@(currentAction == "AddImage" ? "active" : "")">
+                    <i class="fa-solid fa-images"></i>
+                    <span>Upload Gallery</span>
+                </a>
+            </li>
+        </ul>
+    </aside>
+
+    <!-- Main Content -->
+    <main class="admin-main">
+        <!-- Top Bar -->
+        <div class="admin-topbar">
+            <div>
+                <h2>@ViewData["Title"]</h2>
+                <span class="breadcrumb-text">Admin Panel / @ViewData["Title"]</span>
+            </div>
+            <a href="/" class="btn-view-site" target="_blank">
+                <i class="fa-solid fa-external-link-alt me-1"></i> View Site
+            </a>
+        </div>
+
+        @RenderBody()
+    </main>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-bs5.min.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

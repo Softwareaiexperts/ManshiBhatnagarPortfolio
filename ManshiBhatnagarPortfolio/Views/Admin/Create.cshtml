@@ -1,61 +1,75 @@
-﻿@model Article
+@model Article
 @{
-    Layout = "~/Views/Shared/_Layout.cshtml";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Create Blog Post";
 }
 
-<h2 class="mb-4">➕ Add New Article</h2>
-
-<div class="card p-4">
-
+<div class="editor-section">
+    <h5><i class="fa-solid fa-pen-nib"></i> Article Details</h5>
+    
     <form asp-controller="Admin" asp-action="Create" method="post" enctype="multipart/form-data">
-
-        <div class="mb-3">
-            <label>Title</label>
-            <input asp-for="Title" class="form-control" />
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label>Author</label>
-                <input asp-for="Author" class="form-control" />
+        <div class="row g-3">
+            
+            <div class="col-12">
+                <label class="form-label-admin">Title</label>
+                <input asp-for="Title" class="form-control form-control-admin" placeholder="Enter article title" required />
+                <span asp-validation-for="Title" class="text-danger small"></span>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Category</label>
-                <input asp-for="Category" class="form-control" />
-            </div>
-        </div>
-
-        <div class="row">
-            <div class="col-md-6 mb-3">
-                <label>Read Time (min)</label>
-                <input asp-for="ReadTime" class="form-control" />
+            <div class="col-md-6">
+                <label class="form-label-admin">Author</label>
+                <input asp-for="Author" class="form-control form-control-admin" placeholder="e.g. Dr. Mansi Bhatnagar" required />
+                <span asp-validation-for="Author" class="text-danger small"></span>
             </div>
 
-            <div class="col-md-6 mb-3">
-                <label>Upload Image</label>
-                <input type="file" name="image" class="form-control" />
+            <div class="col-md-6">
+                <label class="form-label-admin">Category</label>
+                <input asp-for="Category" class="form-control form-control-admin" placeholder="e.g. Computer Vision, Deep Learning" required />
+                <span asp-validation-for="Category" class="text-danger small"></span>
             </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Read Time (minutes)</label>
+                <input asp-for="ReadTime" type="number" class="form-control form-control-admin" placeholder="e.g. 5" required />
+                <span asp-validation-for="ReadTime" class="text-danger small"></span>
+            </div>
+
+            <div class="col-md-6">
+                <label class="form-label-admin">Featured Image</label>
+                <input type="file" name="image" class="form-control form-control-admin" accept="image/*" required />
+            </div>
+
+            <div class="col-12">
+                <label class="form-label-admin">Content</label>
+                <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+                <span asp-validation-for="Content" class="text-danger small"></span>
+            </div>
+
         </div>
 
-        <div class="mb-3">
-            <label>Content</label>
-            <textarea asp-for="Content" id="editor" class="form-control"></textarea>
+        <div class="text-end mt-4 pt-3 border-top">
+            <a href="/Admin" class="btn btn-light rounded-pill px-4 me-2">Cancel</a>
+            <button type="submit" class="btn-save-page">
+                <i class="fa-solid fa-cloud-arrow-up me-2"></i>Publish Article
+            </button>
         </div>
-
-        <button type="submit" class="btn btn-success">Publish</button>
-
     </form>
-
 </div>
 
 @section Scripts {
     <script>
         $(document).ready(function () {
             $('#editor').summernote({
-                height: 300,
+                height: 350,
                 placeholder: 'Write your article content here...',
-                tabsize: 2
+                toolbar: [
+                    ['style', ['style', 'bold', 'italic', 'underline', 'clear']],
+                    ['font', ['strikethrough', 'superscript', 'subscript']],
+                    ['color', ['color']],
+                    ['para', ['ul', 'ol', 'paragraph']],
+                    ['insert', ['link', 'picture', 'video', 'table']],
+                    ['view', ['fullscreen', 'codeview', 'help']]
+                ]
             });
         });
     </script>
