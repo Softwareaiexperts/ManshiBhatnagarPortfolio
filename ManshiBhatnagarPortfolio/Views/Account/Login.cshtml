@@ -1,0 +1,144 @@
+@model LoginViewModel
+@{
+    Layout = null; // Do not use public layout for clean login screen
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Login - Manshi Bhatnagar</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <style>
+        body {
+            background: radial-gradient(circle at top right, #fff0f5 0%, #fffafb 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Outfit', sans-serif;
+        }
+        .login-card {
+            border: none;
+            max-width: 450px;
+            width: 100%;
+            padding: 40px 30px;
+            box-shadow: 0 15px 35px rgba(244, 143, 177, 0.15);
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            border-radius: 24px;
+        }
+        .login-header {
+            font-family: 'Playfair Display', serif;
+            color: var(--dark-charcoal);
+            font-weight: 700;
+            font-size: 2.2rem;
+            text-align: center;
+            margin-bottom: 8px;
+        }
+        .login-subtitle {
+            text-align: center;
+            color: #666;
+            font-size: 0.95rem;
+            margin-bottom: 30px;
+            font-weight: 500;
+        }
+        .form-label-custom {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #555;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .form-control-custom {
+            border: 1.5px solid #e2e6ea;
+            border-radius: 12px;
+            padding: 12px 16px;
+            font-size: 0.95rem;
+            transition: all 0.2s ease;
+        }
+        .form-control-custom:focus {
+            border-color: var(--blush-pink);
+            box-shadow: 0 0 0 4px rgba(244, 143, 177, 0.15);
+            outline: none;
+        }
+        .btn-login {
+            background: linear-gradient(135deg, var(--blush-pink), #e2a4a4);
+            color: white !important;
+            padding: 14px;
+            border-radius: 50px;
+            font-weight: 700;
+            border: none;
+            font-size: 1rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 4px 15px rgba(244, 143, 177, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            width: 100%;
+            margin-top: 15px;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 143, 177, 0.5);
+        }
+        .back-home {
+            text-align: center;
+            margin-top: 24px;
+        }
+        .back-home a {
+            color: #666;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: color 0.2s;
+        }
+        .back-home a:hover {
+            color: var(--blush-pink);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-card">
+        <h2 class="login-header">Admin Access</h2>
+        <p class="login-subtitle">Manshi Bhatnagar Portfolio Management</p>
+
+        <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@ViewBag.ReturnUrl" method="post">
+            
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger border-0 rounded-3 small p-3 mb-3"></div>
+
+            <div class="mb-3">
+                <label asp-for="Email" class="form-label-custom">Email Address</label>
+                <input asp-for="Email" class="form-control form-control-custom" placeholder="name@example.com" />
+                <span asp-validation-for="Email" class="text-danger small d-block mt-1"></span>
+            </div>
+
+            <div class="mb-3">
+                <label asp-for="Password" class="form-label-custom">Password</label>
+                <input asp-for="Password" class="form-control form-control-custom" placeholder="••••••••" />
+                <span asp-validation-for="Password" class="text-danger small d-block mt-1"></span>
+            </div>
+
+            <div class="mb-4 d-flex justify-content-between align-items-center">
+                <div class="form-check">
+                    <input asp-for="RememberMe" class="form-check-input" style="border-color: #dee2e6;" />
+                    <label asp-for="RememberMe" class="form-check-label small text-secondary" style="font-weight: 500;"></label>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-login">
+                <i class="fa-solid fa-right-to-bracket me-2"></i>Sign In
+            </button>
+        </form>
+
+        <div class="back-home">
+            <a href="/"><i class="fa-solid fa-arrow-left me-1"></i> Back to public portfolio</a>
+        </div>
+    </div>
+
+</body>
+</html>

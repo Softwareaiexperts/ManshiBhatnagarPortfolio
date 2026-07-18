@@ -1,9 +1,11 @@
 using ManshiBhatnagarPortfolio.Data;
 using ManshiBhatnagarPortfolio.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ManshiBhatnagarPortfolio.Controllers
 {
+    [Authorize]
     public class AdminController : Controller
     {
         private readonly ApplicationDbContext _context;
